@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dirty Monkeys Music Store | Tienda de Vinilos</title>
+  
+  <!-- Tipografías Oficiales -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-main: #0d0d0d;
+      --bg-surface: #171717;
+      --bg-card: #1f1f1f;
+      --accent: #EAA522;
+      --accent-hover: #ffb834;
+      --text-main: #f5f5f5;
+      --text-muted: #9e9e9e;
+      --border: #2c2c2c;
+      --success: #2ecc71;
+      --whatsapp: #25D366;
+      --font-display: 'Bebas Neue', Impact, sans-serif;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    /* BARRA DE NAVEGACIÓN STICKY */
+    header.navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13, 13, 13, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand img {
+      width: 44px;
+      height: auto;
+      display: block;
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 26px;
+      letter-spacing: 2px;
+      line-height: 0.9;
+      color: var(--accent);
+    }
+
+    .brand-sub {
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--text-muted);
+    }
+
+    nav.nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    nav.nav-links a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: color 0.2s ease;
+    }
+
+    nav.nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .cart-trigger {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-family: var(--font-display);
+      font-size: 18px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.15s ease, background 0.2s ease;
+    }
+
+    .cart-trigger:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .cart-badge {
+      background: #000;
+      color: #fff;
+      font-size: 12px;
+      font-family: var(--font-sans);
+      font-weight: 700;
+      border-radius: 99px;
+      padding: 2px 7px;
+    }
+
+    /* HERO SECTION */
+    section.hero {
+      padding: 80px 24px 60px;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: #261f0e;
+      color: var(--accent);
+      border: 1px solid #573f15;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 8vw, 84px);
+      line-height: 0.95;
+      letter-spacing: 3px;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 span {
+      color: var(--accent);
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 16px;
+      max-width: 600px;
+      margin-bottom: 30px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+      padding: 12px 28px;
+      border-radius: 6px;
+      font-family: var(--font-display);
+      font-size: 20px;
+      letter-spacing: 1px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      display: inline-block;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      border: 1px solid var(--border);
+      color: #fff;
+      background: transparent;
+      padding: 12px 28px;
+      border-radius: 6px;
+      font-family: var(--font-display);
+      font-size: 20px;
+      letter-spacing: 1px;
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-block;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* SECCIÓN CATÁLOGO */
+    section.catalog-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 42px;
+      letter-spacing: 2px;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .search-filter-box {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .search-filter-box input {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      outline: none;
+      min-width: 260px;
+    }
+
+    .search-filter-box input:focus {
+      border-color: var(--accent);
+    }
+
+    /* GRID DE PRODUCTOS */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .product-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      border-color: #444;
+    }
+
+    .card-thumb {
+      position: relative;
+      width: 100%;
+      padding-top: 100%;
+      background: #000;
+      overflow: hidden;
+    }
+
+    .card-thumb img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover .card-thumb img {
+      transform: scale(1.04);
+    }
+
+    .badge-stock {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .badge-stock.out {
+      background: #c0392b;
+      color: #fff;
+      border: none;
+    }
+
+    .card-info {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card-artist {
+      font-size: 12px;
+      color: var(--accent);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      flex-grow: 1;
+    }
+
+    .card-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .card-price {
+      font-family: var(--font-display);
+      font-size: 24px;
+      letter-spacing: 1px;
+      color: #fff;
+    }
+
+    .btn-add {
+      background: var(--bg-card);
+      color: #fff;
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-add:hover:not(:disabled) {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+    }
+
+    .btn-add:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* SECCIÓN GIFT CARDS */
+    section.giftcards-section {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 70px 24px;
+    }
+
+    .giftcards-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .giftcards-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .gift-mockup {
+      background: linear-gradient(135deg, #242424 0%, #121212 100%);
+      border: 2px dashed var(--accent);
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      position: relative;
+    }
+
+    .gift-mockup-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .gift-code-preview {
+      font-family: monospace;
+      font-size: 22px;
+      color: var(--accent);
+      letter-spacing: 3px;
+      background: #000;
+      padding: 12px;
+      border-radius: 6px;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    /* DRAWER / CARRITO LATERAL */
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .drawer-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 100%;
+      max-width: 400px;
+      height: 100%;
+      background: var(--bg-surface);
+      border-left: 1px solid var(--border);
+      z-index: 210;
+      display: flex;
+      flex-direction: column;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .drawer.active {
+      right: 0;
+    }
+
+    .drawer-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .drawer-header h2 {
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .drawer-body {
+      padding: 20px;
+      flex-grow: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .cart-empty-msg {
+      color: var(--text-muted);
+      text-align: center;
+      margin: auto 0;
+      font-size: 15px;
+    }
+
+    .cart-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      background: var(--bg-card);
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+
+    .cart-row img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    .cart-row-info {
+      flex-grow: 1;
+    }
+
+    .cart-row-title {
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .cart-row-price {
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .cart-row-del {
+      background: none;
+      border: none;
+      color: #e74c3c;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .drawer-footer {
+      padding: 20px;
+      border-top: 1px solid var(--border);
+      background: var(--bg-main);
+    }
+
+    .drawer-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-display);
+      font-size: 26px;
+      letter-spacing: 1px;
+      margin-bottom: 14px;
+    }
+
+    /* FORMULARIO DE DESPACHO */
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    /* BOTÓN FLOTANTE WHATSAPP */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background-color: var(--whatsapp);
+      color: #fff;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+      z-index: 150;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    }
+
+    .whatsapp-float svg {
+      width: 32px;
+      height: 32px;
+      fill: currentColor;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 48px 24px 32px;
+      text-align: center;
+      background: #0a0a0a;
+    }
+
+    .footer-content {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 30px;
+      color: var(--accent);
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .footer-tagline {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .footer-socials {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-socials a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .footer-socials a svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+      display: block;
+    }
+
+    .footer-socials a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(234, 165, 34, 0.05);
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: #666;
+      border-top: 1px solid #1a1a1a;
+      padding-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVEGACIÓN PRINCIPAL -->
+  <header class="navbar">
+    <a href="#" class="brand">
+      <img src="https://res.cloudinary.com/x4s1wwoq/image/upload/v1789753386/logo.png" alt="Dirty Monkeys Logo">
+      <div>
+        <div class="brand-title">DIRTY MONKEYS</div>
+        <div class="brand-sub">MUSIC STORE • BOGOTÁ</div>
+      </div>
+    </a>
+
+    <nav class="nav-links">
+      <a href="#catalogo">Catálogo</a>
+      <a href="#giftcards">Gift Cards</a>
+      <a href="#contacto">Contacto</a>
+      
+      <button class="cart-trigger" onclick="toggleDrawer(true)">
+        <span>Carrito</span>
+        <span class="cart-badge" id="nav-cart-count">0</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">Tienda de Discos • Bogotá</div>
+    <h1>VINILOS ORIGINALES & <span>PRENSAJES DE ÉPOCA</span></h1>
+    <p>Salsa brava, rock clásico, rap, electrónica y ediciones de colección. Envíos a todo el país.</p>
+    <div class="hero-actions">
+      <a href="#catalogo" class="btn-primary">Ver Catálogo en Stock</a>
+      <a href="#giftcards" class="btn-outline">Comprar Gift Card</a>
+    </div>
+  </section>
+
+  <!-- CATÁLOGO -->
+  <section class="catalog-section" id="catalogo">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">DISCOS DISPONIBLES</h2>
+        <p style="color: var(--text-muted); font-size: 14px;">Piezas listas para despacho inmediato.</p>
+      </div>
+
+      <div class="search-filter-box">
+        <input type="text" id="filter-input" placeholder="Buscar por título, artista o género..." oninput="filtrarCatalogo()">
+      </div>
+    </div>
+
+    <!-- Indicador de carga -->
+    <div id="catalog-loading" style="text-align: center; padding: 40px; color: var(--text-muted);">
+      Cargando catálogo...
+    </div>
+
+    <!-- Contenedor Grid -->
+    <div class="products-grid" id="grid-container" style="display: none;"></div>
+  </section>
+
+  <!-- SECCIÓN GIFT CARDS -->
+  <section class="giftcards-section" id="giftcards">
+    <div class="giftcards-container">
+      <div>
+        <div class="hero-badge">Regalo Inmediato</div>
+        <h2 style="font-family: var(--font-display); font-size: 40px; line-height: 1; margin-bottom: 14px;">
+          TARJETA DE REGALO <span style="color: var(--accent);">DIGITAL</span>
+        </h2>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">
+          ¿No sabes qué disco regalar? Pide una Gift Card con código de canje para enviar por correo o WhatsApp, redimible en todo nuestro inventario.
+        </p>
+        <button class="btn-primary" onclick="agregarGiftCardAlCarrito(50000)">
+          Agregar Gift Card $50.000 COP
+        </button>
+      </div>
+
+      <div class="gift-mockup">
+        <div class="gift-mockup-header">
+          <span style="font-family: var(--font-display); font-size: 22px; color: #fff;">TARJETA DIGITAL</span>
+          <span style="font-size: 12px; color: var(--accent); font-weight: 700;">DIRTY MONKEYS</span>
+        </div>
+        <div class="gift-code-preview">DM-XXXXX-2026</div>
+        <p style="font-size: 12px; color: var(--text-muted); text-align: center;">
+          Código de canje enviado directamente al correo tras el pago.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DRAWER DEL CARRITO DE COMPRAS -->
+  <div class="drawer-overlay" id="drawer-overlay" onclick="toggleDrawer(false)"></div>
+  <aside class="drawer" id="cart-drawer">
+    <div class="drawer-header">
+      <h2>TU PEDIDO</h2>
+      <button class="close-btn" onclick="toggleDrawer(false)">&times;</button>
+    </div>
+
+    <div class="drawer-body" id="drawer-body">
+      <!-- Items agregados o aviso de vacío -->
+    </div>
+
+    <!-- FORMULARIO DE ENVÍO Y PAGO -->
+    <div class="drawer-footer" id="drawer-footer" style="display: none;">
+      <div class="drawer-total">
+        <span>TOTAL:</span>
+        <span style="color: var(--accent);" id="cart-total-display">$0 COP</span>
+      </div>
+
+      <div class="form-group">
+        <label>Nombre Completo</label>
+        <input type="text" id="cust-name" placeholder="Ej. Juan Pérez">
+      </div>
+      <div class="form-group">
+        <label>Correo Electrónico</label>
+        <input type="email" id="cust-email" placeholder="correo@ejemplo.com">
+      </div>
+      <div class="form-group">
+        <label>Celular / WhatsApp (Para la guía de envío)</label>
+        <input type="tel" id="cust-phone" placeholder="300 123 4567">
+      </div>
+      <div class="form-group">
+        <label>Dirección y Barrio</label>
+        <input type="text" id="cust-address" placeholder="Calle / Carrera, Barrio">
+      </div>
+      <div class="form-group">
+        <label>Ciudad</label>
+        <input type="text" id="cust-city" placeholder="Bogotá D.C.">
+      </div>
+
+      <button class="btn-primary" style="width: 100%; margin-top: 8px;" onclick="checkoutConMercadoPago()">
+        Pagar con Mercado Pago
+      </button>
+    </div>
+  </aside>
+
+  <!-- BOTÓN FLOTANTE WHATSAPP -->
+  <a href="https://wa.me/@dmonkeysmusic?text=¡Hola,%20Dirty%20Monkeys!%20Me%20gustaría%20recibir%20más%20información%20sobre..." class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="Escríbenos por WhatsApp">
+    <svg viewBox="0 0 24 24">
+      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+    </svg>
+  </a>
+
+  <!-- FOOTER -->
+  <footer id="contacto">
+    <div class="footer-content">
+      <div class="footer-logo">DIRTY MONKEYS MUSIC STORE</div>
+      <p class="footer-tagline">Tienda independiente de vinilos y coleccionables. Envíos protegidos a todo Colombia.</p>
+      
+      <div class="footer-socials">
+  <!-- WhatsApp -->
+<a href="https://wa.me/573003322907?text=Hola%20Dirty%20Monkeys,%20tengo%20una%20pregunta%20sobre%20un%20vinilo" target="_blank" rel="noopener noreferrer" title="WhatsApp @dmonkeysmusic">
+  <svg viewBox="0 0 24 24">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+  </svg>
+  WhatsApp
+</a>
+
+<!-- Instagram -->
+  <a href="https://www.instagram.com/dmonkeysmusic" target="_blank" rel="noopener noreferrer" title="Instagram @dmonkeysmusic">
+    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    Instagram
+  </a>
+
+  <!-- TikTok -->
+  <a href="https://www.tiktok.com/@dmonkeysmusic" target="_blank" rel="noopener noreferrer" title="TikTok @dmonkeysmusic">
+    <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.85.12V9.4a6.33 6.33 0 0 0-.85-.06A6.34 6.34 0 0 0 3.15 15.7a6.34 6.34 0 0 0 10.83 4.46V11.8a8.28 8.28 0 0 0 5.61 2.2v-3.45a4.85 4.85 0 0 1-3.77-1.86z"/></svg>
+    TikTok
+  </a>
+
+  <!-- Facebook -->
+  <a href="https://www.facebook.com/share/1EgHrmYQM5/" target="_blank" rel="noopener noreferrer" title="Facebook Dirty Monkeys">
+    <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    Facebook
+  </a>
+</div>
+
+      <div class="footer-copy">
+        &copy; 2026 Dirty Monkeys Music Store. Bogotá, Colombia. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* CONFIGURACIÓN DE DATOS */
+    const SHEETS_CSV_URL = 'TU_URL_DE_GOOGLE_SHEETS_CSV_AQUI';
+    const MAKE_CHECKOUT_WEBHOOK_URL = 'TU_WEBHOOK_DE_MAKE_CHECKOUT';
+
+    let inventario = [];
+    let carrito = [];
+
+    const catalogoFallback = [
+      { id: 'VIN-001', titulo: 'Canción Protesta', artista: 'Carlos Puebla', precio: '85000', stock: '1', imagen: 'https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&auto=format&fit=crop&q=80', descripcion: 'Prensaje original, excelente estado. Salsa y son.', estado: 'Activo' },
+      { id: 'VIN-002', titulo: 'Live at Yankee Stadium', artista: 'Fania All-Stars', precio: '110000', stock: '0', imagen: 'https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=600&auto=format&fit=crop&q=80', descripcion: 'Concierto histórico. Edición doble.', estado: 'Agotado' },
+      { id: 'VIN-003', titulo: 'Alturas de Machu Picchu', artista: 'Los Jaivas', precio: '125000', stock: '2', imagen: 'https://images.unsplash.com/photo-1461360370896-922624d12aa1?w=600&auto=format&fit=crop&q=80', descripcion: 'Rock progresivo latinoamericano. Formato gatefold.', estado: 'Activo' }
+    ];
+
+    function parseCSV(text) {
+      const lines = text.trim().split('\n');
+      if (lines.length <= 1) return [];
+      const headers = lines[0].split(',').map(h => h.trim().replace(/^["']|["']$/g, '').toLowerCase());
+      
+      return lines.slice(1).map(line => {
+        const values = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || line.split(',');
+        let item = {};
+        headers.forEach((h, i) => {
+          let val = values[i] ? values[i].trim().replace(/^["']|["']$/g, '') : '';
+          item[h] = val;
+        });
+        return item;
+      });
+    }
+
+    async function cargarCatalogo() {
+      const loader = document.getElementById('catalog-loading');
+      const container = document.getElementById('grid-container');
+
+      if (!SHEETS_CSV_URL || SHEETS_CSV_URL.includes('TU_URL_DE_GOOGLE_SHEETS_CSV_AQUI')) {
+        inventario = catalogoFallback;
+        loader.style.display = 'none';
+        container.style.display = 'grid';
+        renderizarGrid(inventario);
+        return;
+      }
+
+      try {
+        const response = await fetch(SHEETS_CSV_URL);
+        const data = await response.text();
+        inventario = parseCSV(data);
+        loader.style.display = 'none';
+        container.style.display = 'grid';
+        renderizarGrid(inventario);
+      } catch (err) {
+        console.error('Error cargando CSV, usando respaldo:', err);
+        inventario = catalogoFallback;
+        loader.style.display = 'none';
+        container.style.display = 'grid';
+        renderizarGrid(inventario);
+      }
+    }
+
+    function renderizarGrid(items) {
+      const container = document.getElementById('grid-container');
+      container.innerHTML = '';
+
+      if (items.length === 0) {
+        container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 20px;">No se encontraron discos con ese criterio.</div>';
+        return;
+      }
+
+      items.forEach(prod => {
+        const stockNum = parseInt(prod.stock || '0', 10);
+        const estaAgotado = stockNum <= 0 || (prod.estado && prod.estado.toLowerCase() === 'agotado');
+
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+          <div class="card-thumb">
+            <img src="${prod.imagen || 'https://images.unsplash.com/photo-1539185441755-769473a23570?w=600'}" alt="${prod.titulo}" loading="lazy">
+            <span class="badge-stock ${estaAgotado ? 'out' : ''}">
+              ${estaAgotado ? 'Agotado' : 'Disponible'}
+            </span>
+          </div>
+          <div class="card-info">
+            <div class="card-artist">${prod.artista || 'Varios Artistas'}</div>
+            <h3 class="card-title">${prod.titulo || 'Sin título'}</h3>
+            <p class="card-desc">${prod.descripcion || 'Prensaje en vinilo 12 pulgadas.'}</p>
+            <div class="card-bottom">
+              <div class="card-price">$${parseInt(prod.precio || '0', 10).toLocaleString('es-CO')}</div>
+              <button class="btn-add" ${estaAgotado ? 'disabled' : ''} onclick="agregarAlCarrito('${prod.id}')">
+                ${estaAgotado ? 'Agotado' : 'Añadir'}
+              </button>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filtrarCatalogo() {
+      const query = document.getElementById('filter-input').value.toLowerCase().trim();
+      const filtrados = inventario.filter(item => 
+        (item.titulo && item.titulo.toLowerCase().includes(query)) ||
+        (item.artista && item.artista.toLowerCase().includes(query)) ||
+        (item.descripcion && item.descripcion.toLowerCase().includes(query))
+      );
+      renderizarGrid(filtrados);
+    }
+
+    /* CARRITO */
+    function agregarAlCarrito(id) {
+      const prod = inventario.find(p => p.id === id);
+      if (!prod) return;
+
+      carrito.push({
+        id: prod.id,
+        titulo: prod.titulo,
+        precio: parseInt(prod.precio, 10),
+        imagen: prod.imagen || 'https://images.unsplash.com/photo-1539185441755-769473a23570?w=600'
+      });
+
+      actualizarUI();
+      toggleDrawer(true);
+    }
+
+    function agregarGiftCardAlCarrito(monto) {
+      carrito.push({
+        id: 'GC-' + monto,
+        titulo: `Gift Card Digital $${monto.toLocaleString('es-CO')} COP`,
+        precio: monto,
+        imagen: 'https://res.cloudinary.com/x4s1wwoq/image/upload/v1789753386/logo.png'
+      });
+      actualizarUI();
+      toggleDrawer(true);
+    }
+
+    function eliminarDelCarrito(index) {
+      carrito.splice(index, 1);
+      actualizarUI();
+    }
+
+    function actualizarUI() {
+      document.getElementById('nav-cart-count').innerText = carrito.length;
+      const drawerBody = document.getElementById('drawer-body');
+      const drawerFooter = document.getElementById('drawer-footer');
+      const totalDisplay = document.getElementById('cart-total-display');
+
+      if (carrito.length === 0) {
+        drawerBody.innerHTML = '<div class="cart-empty-msg">Tu carrito está vacío.<br>Selecciona un vinilo o una tarjeta de regalo.</div>';
+        drawerFooter.style.display = 'none';
+        return;
+      }
+
+      drawerFooter.style.display = 'block';
+      drawerBody.innerHTML = '';
+      let total = 0;
+
+      carrito.forEach((item, index) => {
+        total += item.precio;
+        drawerBody.innerHTML += `
+          <div class="cart-row">
+            <img src="${item.imagen}" alt="${item.titulo}">
+            <div class="cart-row-info">
+              <div class="cart-row-title">${item.titulo}</div>
+              <div class="cart-row-price">$${item.precio.toLocaleString('es-CO')}</div>
+            </div>
+            <button class="cart-row-del" onclick="eliminarDelCarrito(${index})">&times;</button>
+          </div>
+        `;
+      });
+
+      totalDisplay.innerText = `$${total.toLocaleString('es-CO')} COP`;
+    }
+
+    function toggleDrawer(abrir) {
+      const drawer = document.getElementById('cart-drawer');
+      const overlay = document.getElementById('drawer-overlay');
+      if (abrir) {
+        drawer.classList.add('active');
+        overlay.classList.add('active');
+      } else {
+        drawer.classList.remove('active');
+        overlay.classList.remove('active');
+      }
+    }
+
+    /* PAGO CON MERCADO PAGO */
+    async function checkoutConMercadoPago() {
+      const nombre = document.getElementById('cust-name').value.trim();
+      const email = document.getElementById('cust-email').value.trim();
+      const phone = document.getElementById('cust-phone').value.trim();
+      const address = document.getElementById('cust-address').value.trim();
+      const city = document.getElementById('cust-city').value.trim();
+
+      if (!nombre || !email || !phone || !address || !city) {
+        alert('Por favor completa todos los datos de envío.');
+        return;
+      }
+
+      const payload = {
+        comprador: { nombre, email, telefono: phone, direccion: address, ciudad: city },
+        items: carrito,
+        total: carrito.reduce((acc, cur) => acc + cur.precio, 0)
+      };
+
+      if (MAKE_CHECKOUT_WEBHOOK_URL && !MAKE_CHECKOUT_WEBHOOK_URL.includes('TU_WEBHOOK')) {
+        try {
+          const res = await fetch(MAKE_CHECKOUT_WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const data = await res.json();
+          if (data.init_point) {
+            window.location.href = data.init_point;
+            return;
+          }
+        } catch (error) {
+          console.error('Error procesando checkout:', error);
+        }
+      }
+
+      alert('¡Orden lista! El siguiente paso es conectar el Webhook de Make para redireccionar al Checkout Pro con los productos cargados.');
+    }
+
+    document.addEventListener('DOMContentLoaded', cargarCatalogo);
+  </script>
+</body>
+</html>
