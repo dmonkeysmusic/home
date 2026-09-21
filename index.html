@@ -72,6 +72,13 @@
       color: #9e9e9e;
     }
 
+    /* CONTENEDOR DERECHO */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
     nav.nav-links {
       display: flex;
       align-items: center;
@@ -96,7 +103,7 @@
       color: var(--accent) !important; 
     }
 
-/* BOTÓN DEL CARRITO OFICIAL UNIFICADO */
+    /* BOTÓN DEL CARRITO OFICIAL UNIFICADO */
     .cart-trigger {
       background: var(--accent) !important;
       color: #000000 !important;
@@ -144,6 +151,93 @@
       align-items: center !important;
       justify-content: center;
     }
+
+    /* BOTÓN HAMBURGUESA (Oculto en desktop) */
+    .menu-toggle {
+      display: none;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .menu-toggle:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* VISTA MÓVIL (Menor a 768px) */
+    @media (max-width: 768px) {
+      header.navbar {
+        padding: 10px 16px;
+      }
+
+      .brand img {
+        width: 36px;
+      }
+
+      .brand-title {
+        font-size: 22px !important;
+      }
+
+      .brand-sub {
+        font-size: 9px !important;
+      }
+
+      .nav-right {
+        gap: 10px;
+      }
+
+      .cart-trigger {
+        padding: 6px 12px !important;
+        font-size: 16px !important;
+      }
+
+      .cart-trigger span:not(.cart-badge) {
+        font-size: 16px !important;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+      }
+
+      /* Menú flotante desplegable */
+      nav.nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(13, 13, 13, 0.98);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: stretch;
+        padding: 16px 20px;
+        gap: 12px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.9);
+      }
+
+      nav.nav-links.active {
+        display: flex;
+      }
+
+      nav.nav-links a {
+        font-size: 20px !important;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      nav.nav-links a:last-child {
+        border-bottom: none;
+      }
+    }
+
     section.hero {
       padding: 80px 24px 60px;
       text-align: center;
@@ -408,16 +502,27 @@
       </div>
     </a>
 
-    <nav class="nav-links">
-      <a href="index.html" class="active">Catálogo</a>
-      <a href="giftcards.html">Gift Cards</a>
-      <a href="#contacto">Contacto</a>
+    <!-- Contenedor derecho: Enlaces + Carrito + Hamburguesa móvil -->
+    <div class="nav-right">
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html" class="active">Catálogo</a>
+        <a href="giftcards.html">Gift Cards</a>
+        <a href="#contacto" onclick="cerrarMenu()">Contacto</a>
+      </nav>
       
       <button class="cart-trigger" onclick="toggleDrawer(true)">
         <span>Carrito</span>
         <span class="cart-badge" id="nav-cart-count">0</span>
       </button>
-    </nav>
+
+      <button class="menu-toggle" id="menu-toggle" onclick="toggleMenu()" aria-label="Abrir menú">
+        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
   </header>
 
   <section class="hero">
@@ -472,7 +577,7 @@
   </aside>
 
   <!-- BOTÓN FLOTANTE WHATSAPP -->
-  <a href="https://wa.me/@dmonkeysmusic?text=¡Hola,%20Dirty%20Monkeys!%20Me%20gustaría%20recibir%20información%20acerca%20de..." class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="WhatsApp @dmonkeysmusic">
+  <a href="https://wa.me/@dmonkeysmusic?text=%C2%A1Hola,%20Dirty%20Monkeys!%20Me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20acerca%20de..." class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="WhatsApp @dmonkeysmusic">
     <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
   </a>
 
@@ -483,7 +588,7 @@
       <p class="footer-tagline">Tienda independiente de vinilos y coleccionables. Envíos protegidos a todo Colombia.</p>
       
       <div class="footer-socials">
-        <a href="https://wa.me/@dmonkeysmusic?text=¡Hola,%20Dirty%20Monkeys!%20Me%20gustaría%20recibir%20información%20acerca%20de..." target="_blank" rel="noopener noreferrer" title="WhatsApp @dmonkeysmusic">
+        <a href="https://wa.me/@dmonkeysmusic?text=%C2%A1Hola,%20Dirty%20Monkeys!%20Me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20acerca%20de..." target="_blank" rel="noopener noreferrer" title="WhatsApp @dmonkeysmusic">
           <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
           WhatsApp
         </a>
@@ -512,11 +617,24 @@
     let inventario = [];
     let carrito = JSON.parse(localStorage.getItem('dm_cart') || '[]');
 
-    const catalogoFallback = [
-      { id: 'VIN-001', titulo: 'Canción Protesta', artista: 'Carlos Puebla', precio: '85000', stock: '1', imagen: 'https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&auto=format&fit=crop&q=80', descripcion: 'Prensaje original, excelente estado. Salsa y son.', estado: 'Activo' },
-      { id: 'VIN-002', titulo: 'Live at Yankee Stadium', artista: 'Fania All-Stars', precio: '110000', stock: '0', imagen: 'https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=600&auto=format&fit=crop&q=80', descripcion: 'Concierto histórico. Edición doble.', estado: 'Agotado' },
-      { id: 'VIN-003', titulo: 'Alturas de Machu Picchu', artista: 'Los Jaivas', precio: '125000', stock: '2', imagen: 'https://images.unsplash.com/photo-1461360370896-922624d12aa1?w=600&auto=format&fit=crop&q=80', descripcion: 'Rock progresivo latinoamericano. Formato gatefold.', estado: 'Activo' }
-    ];
+    function toggleMenu() {
+      const navLinks = document.getElementById('nav-links');
+      if (navLinks) navLinks.classList.toggle('active');
+    }
+
+    function cerrarMenu() {
+      const navLinks = document.getElementById('nav-links');
+      if (navLinks) navLinks.classList.remove('active');
+    }
+
+    // Cierra el menú al hacer clic por fuera
+    document.addEventListener('click', (e) => {
+      const navLinks = document.getElementById('nav-links');
+      const toggleBtn = document.getElementById('menu-toggle');
+      if (navLinks && toggleBtn && !navLinks.contains(e.target) && !toggleBtn.contains(e.target)) {
+        navLinks.classList.remove('active');
+      }
+    });
 
     function parseCSV(text) {
       const lines = text.trim().split('\n');
@@ -537,6 +655,12 @@
     async function cargarCatalogo() {
       const loader = document.getElementById('catalog-loading');
       const container = document.getElementById('grid-container');
+
+      const catalogoFallback = [
+        { id: 'VIN-001', titulo: 'Canción Protesta', artista: 'Carlos Puebla', precio: '85000', stock: '1', imagen: 'https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&auto=format&fit=crop&q=80', descripcion: 'Prensaje original, excelente estado. Salsa y son.', estado: 'Activo' },
+        { id: 'VIN-002', titulo: 'Live at Yankee Stadium', artista: 'Fania All-Stars', precio: '110000', stock: '0', imagen: 'https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=600&auto=format&fit=crop&q=80', descripcion: 'Concierto histórico. Edición doble.', estado: 'Agotado' },
+        { id: 'VIN-003', titulo: 'Alturas de Machu Picchu', artista: 'Los Jaivas', precio: '125000', stock: '2', imagen: 'https://images.unsplash.com/photo-1461360370896-922624d12aa1?w=600&auto=format&fit=crop&q=80', descripcion: 'Rock progresivo latinoamericano. Formato gatefold.', estado: 'Activo' }
+      ];
 
       if (!SHEETS_CSV_URL || SHEETS_CSV_URL.includes('TU_URL_DE_GOOGLE_SHEETS_CSV_AQUI')) {
         inventario = catalogoFallback;
