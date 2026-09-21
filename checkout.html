@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finalizar Compra | Dirty Monkeys Music Store</title>
+
+  <meta property="og:title" content="Checkout Seguro • Dirty Monkeys Music Store">
+  <meta property="og:description" content="Finaliza tu compra de vinilos originales con envíos asegurados a toda Colombia.">
+  <meta property="og:image" content="https://res.cloudinary.com/x4s1wwoq/image/upload/v1789753386/logo.png">
+  <meta name="theme-color" content="#EAA522">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-main: #0d0d0d;
+      --bg-surface: #171717;
+      --bg-card: #1f1f1f;
+      --accent: #EAA522;
+      --accent-hover: #ffb834;
+      --text-main: #f5f5f5;
+      --text-muted: #9e9e9e;
+      --border: #2c2c2c;
+      --whatsapp: #25D366;
+      --font-display: 'Bebas Neue', Impact, sans-serif;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+
+    body {
+      background-color: #0b0b0d;
+      background-image: radial-gradient(rgba(234, 165, 34, 0.08) 1px, transparent 1px), radial-gradient(rgba(255, 255, 255, 0.03) 1px, #0b0b0d 1px);
+      background-size: 24px 24px;
+      background-position: 0 0, 12px 12px;
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    header.navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13, 13, 13, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+      line-height: 1 !important;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand img { width: 44px; height: auto; display: block; }
+    .brand-title {
+      font-family: var(--font-display) !important;
+      font-size: 26px !important;
+      letter-spacing: 2px !important;
+      line-height: 0.9 !important;
+      color: var(--accent);
+    }
+    .brand-sub {
+      font-family: var(--font-display) !important;
+      font-size: 11px !important;
+      letter-spacing: 3px !important;
+      color: #9e9e9e;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    nav.nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    nav.nav-links a {
+      color: #f5f5f5 !important;
+      text-decoration: none;
+      font-family: var(--font-display) !important;
+      font-size: 18px !important;
+      font-weight: 400 !important;
+      text-transform: uppercase;
+      letter-spacing: 1.5px !important;
+      line-height: 1 !important;
+      transition: color 0.2s ease;
+    }
+
+    nav.nav-links a:hover { color: var(--accent) !important; }
+
+    .cart-trigger {
+      background: var(--accent) !important;
+      color: #000000 !important;
+      border: none !important;
+      padding: 8px 16px !important;
+      border-radius: 6px !important;
+      font-family: var(--font-display) !important;
+      font-size: 18px !important;
+      letter-spacing: 1px !important;
+      line-height: 1 !important;
+      cursor: pointer;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      text-decoration: none !important;
+      box-sizing: border-box !important;
+      transition: transform 0.15s ease, background 0.2s ease;
+    }
+
+    .cart-trigger:hover { 
+      background: var(--accent-hover) !important; 
+      transform: translateY(-1px); 
+    }
+
+    .cart-trigger span:not(.cart-badge) {
+      font-family: var(--font-display) !important;
+      font-size: 18px !important;
+      line-height: 1 !important;
+      letter-spacing: 1px !important;
+      color: #000000 !important;
+    }
+
+    .cart-badge {
+      background-color: #000000 !important;
+      color: #ffffff !important;
+      font-size: 12px !important;
+      font-family: var(--font-sans) !important;
+      font-weight: 700 !important;
+      line-height: 1 !important;
+      border-radius: 99px !important;
+      padding: 2px 7px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    @media (max-width: 768px) {
+      header.navbar { padding: 10px 16px; }
+      .brand img { width: 36px; }
+      .brand-title { font-size: 22px !important; }
+      .brand-sub { font-size: 9px !important; }
+      .nav-right { gap: 10px; }
+      .cart-trigger { padding: 6px 12px !important; font-size: 16px !important; }
+      .cart-trigger span:not(.cart-badge) { font-size: 16px !important; }
+      .menu-toggle { display: inline-flex; }
+
+      nav.nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(13, 13, 13, 0.98);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: stretch;
+        padding: 16px 20px;
+        gap: 12px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.9);
+      }
+
+      nav.nav-links.active { display: flex; }
+      nav.nav-links a {
+        font-size: 20px !important;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      nav.nav-links a:last-child { border-bottom: none; }
+    }
+
+    main.checkout-container {
+      flex: 1;
+      max-width: 1080px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 48px 24px 20px;
+    }
+
+    .checkout-header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+    }
+
+    .checkout-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(34px, 5vw, 48px);
+      letter-spacing: 2px;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .checkout-header p {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .checkout-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    @media (max-width: 860px) {
+      .checkout-layout { grid-template-columns: 1fr; }
+    }
+
+    .form-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+    }
+
+    .panel-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      letter-spacing: 1px;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 12px 14px;
+      border-radius: 6px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .form-group select { cursor: pointer; }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 540px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    .summary-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      position: sticky;
+      top: 90px;
+    }
+
+    .weight-badge {
+      font-size: 12px;
+      color: var(--accent);
+      background: rgba(234, 165, 34, 0.1);
+      border: 1px solid rgba(234, 165, 34, 0.25);
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+    }
+
+    .order-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 280px;
+      overflow-y: auto;
+      margin-bottom: 20px;
+      padding-right: 4px;
+    }
+
+    .order-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 10px;
+      border-radius: 6px;
+    }
+
+    .order-row img {
+      width: 48px;
+      height: 48px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    .order-row-info { flex: 1; }
+    .order-row-title { font-size: 13px; font-weight: 600; line-height: 1.2; color: #fff; }
+    .order-row-price { font-size: 13px; color: var(--accent); font-weight: 700; margin-top: 2px; }
+
+    .summary-totals {
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+      margin-bottom: 24px;
+    }
+
+    .total-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .total-line.final {
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: 1px;
+      color: #fff;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .total-line.final span:last-child {
+      color: var(--accent);
+    }
+
+    .btn-pay-mp {
+      width: 100%;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 14px;
+      border-radius: 6px;
+      font-family: var(--font-display);
+      font-size: 22px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.2s, transform 0.15s, opacity 0.2s;
+    }
+
+    .btn-pay-mp:hover:not(:disabled) {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-ws-order {
+      width: 100%;
+      background: transparent;
+      color: var(--whatsapp);
+      border: 1px solid rgba(37, 211, 102, 0.4);
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 10px;
+      transition: background 0.2s, border-color 0.2s, opacity 0.2s;
+    }
+
+    .btn-ws-order:hover:not(:disabled) {
+      background: rgba(37, 211, 102, 0.1);
+      border-color: var(--whatsapp);
+    }
+
+    .btn-ws-order svg { width: 18px; height: 18px; fill: currentColor; }
+
+    button:disabled {
+      opacity: 0.45 !important;
+      cursor: not-allowed !important;
+      transform: none !important;
+    }
+
+    .form-status-alert {
+      font-size: 12px;
+      color: #e67e22;
+      text-align: center;
+      margin-top: 12px;
+      font-weight: 500;
+    }
+
+    .empty-cart-view {
+      text-align: center;
+      padding: 60px 20px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .empty-cart-view h2 {
+      font-family: var(--font-display);
+      font-size: 36px;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .empty-cart-view p {
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      font-size: 15px;
+    }
+
+    footer#contacto {
+      border-top: 1px solid var(--border) !important;
+      padding: 48px 24px 32px !important;
+      text-align: center !important;
+      background: #0a0a0a !important;
+      margin-top: 60px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+
+    .footer-content { max-width: 600px !important; margin: 0 auto !important; }
+    .footer-logo {
+      font-family: var(--font-display) !important;
+      font-size: 30px !important;
+      line-height: 1 !important;
+      color: var(--accent) !important;
+      letter-spacing: 2px !important;
+      margin-bottom: 8px !important;
+      text-transform: uppercase !important;
+    }
+
+    .footer-tagline {
+      color: var(--text-muted) !important;
+      font-family: var(--font-sans) !important;
+      font-size: 14px !important;
+      line-height: 1.5 !important;
+      margin-bottom: 22px !important;
+    }
+
+    .footer-socials {
+      display: flex !important;
+      justify-content: center !important;
+      gap: 12px !important;
+      margin-bottom: 24px !important;
+      flex-wrap: wrap !important;
+    }
+
+    .footer-socials a {
+      color: var(--text-main) !important;
+      text-decoration: none !important;
+      font-family: var(--font-sans) !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      border: 1px solid var(--border) !important;
+      padding: 8px 14px !important;
+      border-radius: 6px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      transition: border-color 0.2s, color 0.2s, background 0.2s !important;
+    }
+
+    .footer-socials a svg {
+      width: 16px !important;
+      height: 16px !important;
+      fill: currentColor !important;
+      display: block !important;
+    }
+
+    .footer-socials a:hover {
+      border-color: var(--accent) !important;
+      color: var(--accent) !important;
+      background: rgba(234, 165, 34, 0.05) !important;
+    }
+
+    .footer-copy {
+      font-family: var(--font-sans) !important;
+      font-size: 12px !important;
+      line-height: 1.6 !important;
+      color: #666666 !important;
+      border-top: 1px solid #1a1a1a !important;
+      padding-top: 20px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 6px !important;
+      flex-wrap: wrap !important;
+    }
+
+    .flag-colombia {
+      width: 18px;
+      height: 12px;
+      display: inline-block;
+      border-radius: 2px;
+      overflow: hidden;
+      vertical-align: middle;
+      box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="brand">
+      <img src="https://res.cloudinary.com/x4s1wwoq/image/upload/v1789753386/logo.png" alt="Dirty Monkeys Logo">
+      <div>
+        <div class="brand-title">DIRTY MONKEYS</div>
+        <div class="brand-sub">MUSIC STORE • BOGOTÁ</div>
+      </div>
+    </a>
+
+    <div class="nav-right">
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html">Catálogo</a>
+        <a href="giftcards.html">Gift Cards</a>
+        <a href="contacto.html" onclick="cerrarMenu()">Contacto</a>
+      </nav>
+      
+      <button class="cart-trigger" onclick="window.location.href='index.html'">
+        <span>Carrito</span>
+        <span class="cart-badge" id="nav-cart-count">0</span>
+      </button>
+
+      <button class="menu-toggle" id="menu-toggle" onclick="toggleMenu()" aria-label="Abrir menú">
+        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="checkout-container">
+    
+    <div id="checkout-active-view">
+      <div class="checkout-header">
+        <h1>FINALIZAR PEDIDO</h1>
+        <p>Selecciona tu departamento y municipio para liquidar el flete de forma automática.</p>
+      </div>
+
+      <div class="checkout-layout">
+        
+        <div class="form-panel">
+          <div class="panel-title">1. DATOS DE ENTREGA</div>
+          <form id="checkout-form" oninput="comprobarCampos()">
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="nombre">Nombre Completo *</label>
+                <input type="text" id="nombre" placeholder="Ej: Camilo Gómez" required>
+              </div>
+              <div class="form-group">
+                <label for="celular">Celular / WhatsApp *</label>
+                <input type="tel" id="celular" placeholder="Ej: 310 1234567" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="correo">Correo Electrónico *</label>
+              <input type="email" id="correo" placeholder="correo@ejemplo.com" required>
+            </div>
+
+            <!-- DESPLEGABLES ANIDADOS (DEPARTAMENTO Y MUNICIPIO) -->
+            <div class="form-row">
+              <div class="form-group">
+                <label for="departamento-select">Departamento *</label>
+                <select id="departamento-select" onchange="alCambiarDepartamento(); comprobarCampos();" required>
+                  <option value="">-- Selecciona Departamento --</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="municipio-select">Ciudad / Municipio *</label>
+                <select id="municipio-select" onchange="alCambiarMunicipio(); comprobarCampos();" disabled required>
+                  <option value="">-- Primero elige departamento --</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="barrio">Barrio / Sector *</label>
+              <input type="text" id="barrio" placeholder="Ej: Chapinero Alto, Laureles, El Poblado..." required>
+            </div>
+
+            <div class="form-group">
+              <label for="direccion">Dirección Completa *</label>
+              <input type="text" id="direccion" placeholder="Calle, Carrera, Edificio, Apto, Bloque..." required>
+            </div>
+
+            <div class="form-group">
+              <label for="notas">Notas de Entrega (Opcional)</label>
+              <textarea id="notas" rows="2" placeholder="Indicaciones para la transportadora..."></textarea>
+            </div>
+          </form>
+        </div>
+
+        <div class="summary-panel">
+          <div class="panel-title">2. RESUMEN DEL PEDIDO</div>
+          
+          <div class="weight-badge" id="weight-badge">
+            ⚖️ Peso estimado: <span id="peso-total">0 kg</span> (<span id="cant-vinilos">0</span> LPs)
+          </div>
+
+          <div class="order-items-list" id="order-items-list"></div>
+
+          <div class="summary-totals">
+            <div class="total-line">
+              <span>Subtotal vinilos:</span>
+              <span id="subtotal-val">$0 COP</span>
+            </div>
+            <div class="total-line">
+              <span>Flete de envío:</span>
+              <span style="color: var(--accent);" id="shipping-val">Elige tu municipio</span>
+            </div>
+            <div class="total-line final">
+              <span>TOTAL:</span>
+              <span id="total-val">$0 COP</span>
+            </div>
+          </div>
+
+          <button type="button" class="btn-pay-mp" id="btn-pay-mp" onclick="procesarPago()" disabled>
+            Pagar con Mercado Pago
+          </button>
+
+          <button type="button" class="btn-ws-order" id="btn-ws-order" onclick="confirmarPorWhatsApp()" disabled>
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Completar orden por WhatsApp
+          </button>
+
+          <div class="form-status-alert" id="form-status-msg">
+            * Completa todos los campos obligatorios (*) y selecciona tu destino para continuar.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="checkout-empty-view" class="empty-cart-view" style="display: none;">
+      <h2>TU CARRITO ESTÁ VACÍO</h2>
+      <p>No tienes ningún vinilo en tu orden en este momento.</p>
+      <a href="index.html" class="cart-trigger" style="display: inline-flex;">
+        <span>Ver Catálogo Disponible</span>
+      </a>
+    </div>
+
+  </main>
+
+  <footer id="contacto">
+    <div class="footer-content">
+      <div class="footer-logo">DIRTY MONKEYS MUSIC STORE</div>
+      <p class="footer-tagline">Tienda de vinilos y coleccionables. Envíos a todo Colombia.</p>
+      
+      <div class="footer-socials">
+        <a href="https://wa.me/@dmonkeysmusic?text=%C2%A1Hola,%20Dirty%20Monkeys!%20Me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20acerca%20de..." target="_blank" rel="noopener noreferrer" title="WhatsApp @dmonkeysmusic">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          WhatsApp
+        </a>
+        <a href="https://www.instagram.com/dmonkeysmusic" target="_blank" rel="noopener noreferrer" title="Instagram @dmonkeysmusic">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          Instagram
+        </a>
+        <a href="https://www.tiktok.com/@dmonkeysmusic" target="_blank" rel="noopener noreferrer" title="TikTok @dmonkeysmusic">
+          <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.85.12V9.4a6.33 6.33 0 0 0-.85-.06A6.34 6.34 0 0 0 3.15 15.7a6.34 6.34 0 0 0 10.83 4.46V11.8a8.28 8.28 0 0 0 5.61 2.2v-3.45a4.85 4.85 0 0 1-3.77-1.86z"/></svg>
+          TikTok
+        </a>
+        <a href="https://www.facebook.com/dmonkeysmusic/" target="_blank" rel="noopener noreferrer" title="Facebook Dirty Monkeys">
+          <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          Facebook
+        </a>
+      </div>
+
+      <div class="footer-copy">
+        <span>&copy; 2026 Dirty Monkeys Music Store. Bogotá, Colombia</span>
+        <svg class="flag-colombia" viewBox="0 0 900 600" aria-label="Bandera de Colombia">
+          <rect width="900" height="600" fill="#c60b1e"/>
+          <rect width="900" height="450" fill="#003893"/>
+          <rect width="900" height="300" fill="#fcd116"/>
+        </svg>
+        <span>• Todos los derechos reservados.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const SHEETS_ENVIOS_CSV_URL = 'TU_URL_DE_GOOGLE_SHEETS_ENVIOS_CSV_AQUI';
+
+    let carrito = JSON.parse(localStorage.getItem('dm_cart') || '[]');
+    let costoEnvioActual = 0;
+    let kilosFacturables = 1;
+    let zonaSeleccionadaId = "";
+
+    // Tabla base de tarifas
+    const TABLA_TARIFAS = {
+      "zona_bogota": { nombre: "Bogotá D.C. & Sabana", base: 12000, adicional: 3500 },
+      "zona_principal": { nombre: "Ciudades Principales", base: 20000, adicional: 5000 },
+      "zona_intermedio": { nombre: "Municipios Intermedios", base: 23000, adicional: 5500 },
+      "zona_especial": { nombre: "Destinos Especiales / Difícil Acceso", base: 32000, adicional: 7500 }
+    };
+
+    // Directorio nacional de Departamentos y Municipios
+    const MUNICIPIOS_COLOMBIA = {
+      "Bogotá D.C.": [
+        { m: "Bogotá D.C. (Todas las localidades)", z: "zona_bogota" }
+      ],
+      "Cundinamarca": [
+        { m: "Soacha", z: "zona_bogota" },
+        { m: "Chía", z: "zona_bogota" },
+        { m: "Zipaquirá", z: "zona_bogota" },
+        { m: "Cajicá", z: "zona_bogota" },
+        { m: "Funza", z: "zona_bogota" },
+        { m: "Mosquera", z: "zona_bogota" },
+        { m: "Madrid", z: "zona_bogota" },
+        { m: "Cota", z: "zona_bogota" },
+        { m: "Facatativá", z: "zona_intermedio" },
+        { m: "Girardot", z: "zona_intermedio" },
+        { m: "Fusagasugá", z: "zona_intermedio" },
+        { m: "Otros municipios Cundinamarca", z: "zona_intermedio" }
+      ],
+      "Antioquia": [
+        { m: "Medellín", z: "zona_principal" },
+        { m: "Bello", z: "zona_principal" },
+        { m: "Itagüí", z: "zona_principal" },
+        { m: "Envigado", z: "zona_principal" },
+        { m: "Sabaneta", z: "zona_principal" },
+        { m: "Rionegro", z: "zona_intermedio" },
+        { m: "Apartadó", z: "zona_intermedio" },
+        { m: "Otros municipios Antioquia", z: "zona_intermedio" }
+      ],
+      "Valle del Cauca": [
+        { m: "Cali", z: "zona_principal" },
+        { m: "Palmira", z: "zona_principal" },
+        { m: "Yumbo", z: "zona_principal" },
+        { m: "Jamundí", z: "zona_principal" },
+        { m: "Buga", z: "zona_intermedio" },
+        { m: "Tuluá", z: "zona_intermedio" },
+        { m: "Cartago", z: "zona_intermedio" },
+        { m: "Buenaventura", z: "zona_intermedio" },
+        { m: "Otros municipios Valle", z: "zona_intermedio" }
+      ],
+      "Atlántico": [
+        { m: "Barranquilla", z: "zona_principal" },
+        { m: "Soledad", z: "zona_principal" },
+        { m: "Malambo", z: "zona_principal" },
+        { m: "Puerto Colombia", z: "zona_principal" },
+        { m: "Otros municipios Atlántico", z: "zona_intermedio" }
+      ],
+      "Santander": [
+        { m: "Bucaramanga", z: "zona_principal" },
+        { m: "Floridablanca", z: "zona_principal" },
+        { m: "Girón", z: "zona_principal" },
+        { m: "Piedecuesta", z: "zona_principal" },
+        { m: "Barrancabermeja", z: "zona_intermedio" },
+        { m: "San Gil", z: "zona_intermedio" },
+        { m: "Otros municipios Santander", z: "zona_intermedio" }
+      ],
+      "Bolívar": [
+        { m: "Cartagena", z: "zona_principal" },
+        { m: "Magangué", z: "zona_intermedio" },
+        { m: "Otros municipios Bolívar", z: "zona_intermedio" }
+      ],
+      "Risaralda": [
+        { m: "Pereira", z: "zona_principal" },
+        { m: "Dosquebradas", z: "zona_principal" },
+        { m: "Otros municipios Risaralda", z: "zona_intermedio" }
+      ],
+      "Caldas": [
+        { m: "Manizales", z: "zona_principal" },
+        { m: "Villamaría", z: "zona_principal" },
+        { m: "Otros municipios Caldas", z: "zona_intermedio" }
+      ],
+      "Quindío": [
+        { m: "Armenia", z: "zona_principal" },
+        { m: "Calarcá", z: "zona_intermedio" },
+        { m: "Otros municipios Quindío", z: "zona_intermedio" }
+      ],
+      "Norte de Santander": [
+        { m: "Cúcuta", z: "zona_principal" },
+        { m: "Los Patios", z: "zona_principal" },
+        { m: "Villa del Rosario", z: "zona_principal" },
+        { m: "Ocaña", z: "zona_intermedio" },
+        { m: "Pamplona", z: "zona_intermedio" },
+        { m: "Otros municipios N. Santander", z: "zona_intermedio" }
+      ],
+      "Tolima": [
+        { m: "Ibagué", z: "zona_principal" },
+        { m: "Espinal", z: "zona_intermedio" },
+        { m: "Melgar", z: "zona_intermedio" },
+        { m: "Otros municipios Tolima", z: "zona_intermedio" }
+      ],
+      "Meta": [
+        { m: "Villavicencio", z: "zona_principal" },
+        { m: "Acacías", z: "zona_intermedio" },
+        { m: "Otros municipios Meta", z: "zona_intermedio" }
+      ],
+      "Huila": [
+        { m: "Neiva", z: "zona_principal" },
+        { m: "Pitalito", z: "zona_intermedio" },
+        { m: "Otros municipios Huila", z: "zona_intermedio" }
+      ],
+      "Nariño": [
+        { m: "Pasto", z: "zona_principal" },
+        { m: "Ipiales", z: "zona_intermedio" },
+        { m: "Tumaco", z: "zona_intermedio" },
+        { m: "Otros municipios Nariño", z: "zona_especial" }
+      ],
+      "Córdoba": [
+        { m: "Montería", z: "zona_principal" },
+        { m: "Cereté", z: "zona_intermedio" },
+        { m: "Otros municipios Córdoba", z: "zona_intermedio" }
+      ],
+      "Cesar": [
+        { m: "Valledupar", z: "zona_principal" },
+        { m: "Aguachica", z: "zona_intermedio" },
+        { m: "Otros municipios Cesar", z: "zona_intermedio" }
+      ],
+      "Magdalena": [
+        { m: "Santa Marta", z: "zona_principal" },
+        { m: "Ciénaga", z: "zona_intermedio" },
+        { m: "Otros municipios Magdalena", z: "zona_intermedio" }
+      ],
+      "Cauca": [
+        { m: "Popayán", z: "zona_principal" },
+        { m: "Santander de Quilichao", z: "zona_intermedio" },
+        { m: "Otros municipios Cauca", z: "zona_especial" }
+      ],
+      "Boyacá": [
+        { m: "Tunja", z: "zona_principal" },
+        { m: "Duitama", z: "zona_intermedio" },
+        { m: "Sogamoso", z: "zona_intermedio" },
+        { m: "Otros municipios Boyacá", z: "zona_intermedio" }
+      ],
+      "Sucre": [
+        { m: "Sincelejo", z: "zona_principal" },
+        { m: "Corozal", z: "zona_intermedio" },
+        { m: "Otros municipios Sucre", z: "zona_intermedio" }
+      ],
+      "San Andrés y Providencia": [
+        { m: "San Andrés Isla", z: "zona_especial" },
+        { m: "Providencia", z: "zona_especial" }
+      ],
+      "Amazonas": [
+        { m: "Leticia", z: "zona_especial" },
+        { m: "Otros municipios Amazonas", z: "zona_especial" }
+      ],
+      "Arauca": [
+        { m: "Arauca", z: "zona_especial" },
+        { m: "Otros municipios Arauca", z: "zona_especial" }
+      ],
+      "Casanare": [
+        { m: "Yopal", z: "zona_intermedio" },
+        { m: "Otros municipios Casanare", z: "zona_especial" }
+      ],
+      "Caquetá": [
+        { m: "Florencia", z: "zona_intermedio" },
+        { m: "Otros municipios Caquetá", z: "zona_especial" }
+      ],
+      "Chocó": [
+        { m: "Quibdó", z: "zona_especial" },
+        { m: "Otros municipios Chocó", z: "zona_especial" }
+      ],
+      "Guainía": [
+        { m: "Inírida", z: "zona_especial" }
+      ],
+      "Guaviare": [
+        { m: "San José del Guaviare", z: "zona_especial" }
+      ],
+      "La Guajira": [
+        { m: "Riohacha", z: "zona_intermedio" },
+        { m: "Maicao", z: "zona_intermedio" },
+        { m: "Otros municipios La Guajira", z: "zona_especial" }
+      ],
+      "Putumayo": [
+        { m: "Mocoa", z: "zona_especial" },
+        { m: "Puerto Asís", z: "zona_especial" },
+        { m: "Otros municipios Putumayo", z: "zona_especial" }
+      ],
+      "Vaupés": [
+        { m: "Mitú", z: "zona_especial" }
+      ],
+      "Vichada": [
+        { m: "Puerto Carreño", z: "zona_especial" }
+      ]
+    };
+
+    function toggleMenu() {
+      const navLinks = document.getElementById('nav-links');
+      if (navLinks) navLinks.classList.toggle('active');
+    }
+
+    function cerrarMenu() {
+      const navLinks = document.getElementById('nav-links');
+      if (navLinks) navLinks.classList.remove('active');
+    }
+
+    document.addEventListener('click', (e) => {
+      const navLinks = document.getElementById('nav-links');
+      const toggleBtn = document.getElementById('menu-toggle');
+      if (navLinks && toggleBtn && !navLinks.contains(e.target) && !toggleBtn.contains(e.target)) {
+        navLinks.classList.remove('active');
+      }
+    });
+
+    function calcularSubtotal() {
+      return carrito.reduce((acc, item) => acc + (parseInt(item.precio, 10) || 0), 0);
+    }
+
+    function calcularPeso() {
+      const cant = carrito.length;
+      // 300g por vinilo + 200g base de empaque seguro
+      const gramos = (cant * 300) + 200;
+      const kgEstimado = (gramos / 1000).toFixed(1);
+      kilosFacturables = Math.max(1, Math.ceil(gramos / 1000));
+      
+      const badgePeso = document.getElementById('peso-total');
+      const badgeCant = document.getElementById('cant-vinilos');
+      if (badgePeso) badgePeso.innerText = `${kgEstimado} kg (Factura ${kilosFacturables} kg)`;
+      if (badgeCant) badgeCant.innerText = cant;
+    }
+
+    function inicializarDepartamentos() {
+      const deptoSelect = document.getElementById('departamento-select');
+      deptoSelect.innerHTML = '<option value="">-- Selecciona Departamento --</option>';
+      
+      Object.keys(MUNICIPIOS_COLOMBIA).forEach(depto => {
+        deptoSelect.innerHTML += `<option value="${depto}">${depto}</option>`;
+      });
+    }
+
+    function alCambiarDepartamento() {
+      const deptoSelect = document.getElementById('departamento-select');
+      const muniSelect = document.getElementById('municipio-select');
+      const depto = deptoSelect.value;
+
+      muniSelect.innerHTML = '<option value="">-- Selecciona Ciudad o Municipio --</option>';
+
+      if (!depto) {
+        muniSelect.setAttribute('disabled', 'true');
+        zonaSeleccionadaId = "";
+        recalcularFlete();
+        return;
+      }
+
+      muniSelect.removeAttribute('disabled');
+      const municipios = MUNICIPIOS_COLOMBIA[depto] || [];
+      municipios.forEach(item => {
+        muniSelect.innerHTML += `<option value="${item.m}" data-zona="${item.z}">${item.m}</option>`;
+      });
+
+      zonaSeleccionadaId = "";
+      recalcularFlete();
+    }
+
+    function alCambiarMunicipio() {
+      const muniSelect = document.getElementById('municipio-select');
+      const opt = muniSelect.options[muniSelect.selectedIndex];
+
+      if (opt && opt.value) {
+        zonaSeleccionadaId = opt.getAttribute('data-zona');
+      } else {
+        zonaSeleccionadaId = "";
+      }
+
+      recalcularFlete();
+    }
+
+    function recalcularFlete() {
+      const shippingValEl = document.getElementById('shipping-val');
+      const totalValEl = document.getElementById('total-val');
+
+      if (!zonaSeleccionadaId || !TABLA_TARIFAS[zonaSeleccionadaId]) {
+        costoEnvioActual = 0;
+        shippingValEl.innerText = 'Elige tu municipio';
+      } else {
+        const info = TABLA_TARIFAS[zonaSeleccionadaId];
+        const kilosExtra = Math.max(0, kilosFacturables - 1);
+        costoEnvioActual = info.base + (kilosExtra * info.adicional);
+        shippingValEl.innerText = `$${costoEnvioActual.toLocaleString('es-CO')} COP (${info.nombre})`;
+      }
+
+      const subtotal = calcularSubtotal();
+      const total = subtotal + costoEnvioActual;
+      totalValEl.innerText = `$${total.toLocaleString('es-CO')} COP`;
+    }
+
+    function comprobarCampos() {
+      const nombre = document.getElementById('nombre').value.trim();
+      const celular = document.getElementById('celular').value.trim();
+      const correo = document.getElementById('correo').value.trim();
+      const depto = document.getElementById('departamento-select').value;
+      const municipio = document.getElementById('municipio-select').value;
+      const barrio = document.getElementById('barrio').value.trim();
+      const direccion = document.getElementById('direccion').value.trim();
+
+      const btnPay = document.getElementById('btn-pay-mp');
+      const btnWs = document.getElementById('btn-ws-order');
+      const alertMsg = document.getElementById('form-status-msg');
+
+      const formularioCompleto = nombre && celular && correo && depto && municipio && barrio && direccion && (costoEnvioActual > 0);
+
+      if (formularioCompleto) {
+        btnPay.removeAttribute('disabled');
+        btnWs.removeAttribute('disabled');
+        alertMsg.style.color = '#2ecc71';
+        alertMsg.innerText = '✓ Datos completos y flete liquidado. Ya puedes continuar con el pago.';
+      } else {
+        btnPay.setAttribute('disabled', 'true');
+        btnWs.setAttribute('disabled', 'true');
+        alertMsg.style.color = '#e67e22';
+        alertMsg.innerText = '* Completa todos los campos obligatorios (*) y selecciona tu destino para continuar.';
+      }
+    }
+
+    function renderizarCheckout() {
+      const activeView = document.getElementById('checkout-active-view');
+      const emptyView = document.getElementById('checkout-empty-view');
+      const itemsContainer = document.getElementById('order-items-list');
+      const subtotalVal = document.getElementById('subtotal-val');
+      const totalVal = document.getElementById('total-val');
+      const badge = document.getElementById('nav-cart-count');
+
+      if (badge) badge.innerText = carrito.length;
+
+      if (carrito.length === 0) {
+        activeView.style.display = 'none';
+        emptyView.style.display = 'block';
+        return;
+      }
+
+      activeView.style.display = 'block';
+      emptyView.style.display = 'none';
+      itemsContainer.innerHTML = '';
+
+      carrito.forEach((item) => {
+        itemsContainer.innerHTML += `
+          <div class="order-row">
+            <img src="${item.imagen || 'https://images.unsplash.com/photo-1539185441755-769473a23570?w=600'}" alt="${item.titulo}">
+            <div class="order-row-info">
+              <div class="order-row-title">${item.titulo}</div>
+              <div class="order-row-price">$${parseInt(item.precio, 10).toLocaleString('es-CO')} COP</div>
+            </div>
+          </div>
+        `;
+      });
+
+      calcularPeso();
+      const subtotalNum = calcularSubtotal();
+      subtotalVal.innerText = `$${subtotalNum.toLocaleString('es-CO')} COP`;
+      totalVal.innerText = `$${subtotalNum.toLocaleString('es-CO')} COP`;
+    }
+
+    function obtenerDatosEnvio() {
+      const depto = document.getElementById('departamento-select').value;
+      const municipio = document.getElementById('municipio-select').value;
+      const zona = TABLA_TARIFAS[zonaSeleccionadaId] ? TABLA_TARIFAS[zonaSeleccionadaId].nombre : '';
+
+      return {
+        nombre: document.getElementById('nombre').value.trim(),
+        celular: document.getElementById('celular').value.trim(),
+        correo: document.getElementById('correo').value.trim(),
+        departamento: depto,
+        municipio: municipio,
+        zonaTarifa: zona,
+        flete: costoEnvioActual,
+        pesoFacturado: kilosFacturables,
+        barrio: document.getElementById('barrio').value.trim(),
+        direccion: document.getElementById('direccion').value.trim(),
+        notas: document.getElementById('notas').value.trim()
+      };
+    }
+
+    function procesarPago() {
+      const d = obtenerDatosEnvio();
+      sessionStorage.setItem('dm_shipping', JSON.stringify(d));
+
+      alert(`Redirigiendo a Mercado Pago por $${(calcularSubtotal() + d.flete).toLocaleString('es-CO')} COP (con envío a ${d.municipio})...`);
+      window.location.href = 'gracias.html';
+    }
+
+    function confirmarPorWhatsApp() {
+      const d = obtenerDatosEnvio();
+      const subtotal = calcularSubtotal();
+      const total = subtotal + d.flete;
+
+      let itemsTexto = carrito.map(i => `• ${i.titulo} ($${parseInt(i.precio, 10).toLocaleString('es-CO')})`).join('%0A');
+
+      let mensaje = `¡Hola, Dirty Monkeys! Quiero confirmar mi orden de compra:%0A%0A` +
+                    `*Vinilos seleccionados (${carrito.length} LPs / ~${d.pesoFacturado} kg):*%0A${itemsTexto}%0A%0A` +
+                    `*Subtotal:* $${subtotal.toLocaleString('es-CO')} COP%0A` +
+                    `*Envío asegurado (${d.municipio}, ${d.departamento}):* $${d.flete.toLocaleString('es-CO')} COP%0A` +
+                    `*TOTAL A PAGAR:* $${total.toLocaleString('es-CO')} COP%0A%0A` +
+                    `*Datos de Despacho:*%0A` +
+                    `Nombre: ${d.nombre}%0A` +
+                    `Teléfono: ${d.celular}%0A` +
+                    `Correo: ${d.correo}%0A` +
+                    `Ubicación: ${d.municipio}, ${d.departamento} (${d.barrio})%0A` +
+                    `Dirección: ${d.direccion}` +
+                    (d.notas ? `%0AIndicaciones: ${d.notas}` : '');
+
+      window.open(`https://wa.me/@dmonkeysmusic?text=${mensaje}`, '_blank');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderizarCheckout();
+      inicializarDepartamentos();
+      comprobarCampos();
+    });
+  </script>
+</body>
+</html>
