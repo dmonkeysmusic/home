@@ -1206,13 +1206,95 @@
       };
     }
 
-    function procesarPago() {
-      const d = obtenerDatosEnvio();
-      sessionStorage.setItem('dm_shipping', JSON.stringify(d));
+    async function procesarPago() {
+    const d = obtenerDatosEnvio();
+    const subtotal = calcularSubtotal();
+    const totalGeneral = subtotal + d.flete;
 
-      alert(`Redirigiendo a Mercado Pago por $${(calcularSubtotal() + d.flete).toLocaleString('es-CO')} COP (con envío a ${d.municipio})...`);
-      window.location.href = 'gracias.html';
+    // 1. Armamos los ítems del carrito con los vinilos
+    let itemsCheckout = carrito.map(item => ({
+        title: item.titulo,
+        quantity: parseInt(item.cantidad, 10) || 1,
+        currency_id: "COP",
+        unit_price: parseFloat(item.precio)
+    }));
+
+    // 2. Metemos el flete de envío como un ítem más del carrito para que se cobre sí o sí
+    itemsCheckout.push({
+        title: `Envío asegurado (${d.municipio}, ${d.departamento}) - ~${d.pesoFacturado}kg`,
+        quantity: 1,
+        currency_id: "COP",
+        unit_price: parseFloat(d.flete)
+    });
+
+    // 3. Empaquetamos todo el payload que se va para Mercado Pago y tu Make
+    const datosOrden = {
+        items: itemsCheckout,
+        payer: {
+            name: d.nombre,
+            email: d.correo,
+            phone: {
+                number: d.celular
+            },
+            address: {
+                street_name: `${d.direccion} (${d.barrio})`,
+                city_name: d.municipio
+            }
+        },
+        shipments: {
+            cost: d.flete,
+            mode: "not_specified"
+        },
+        back_urls: {
+            success: "https://tudominio.com/gracias.html", // Cambia por tu URL real de éxito
+            failure: "https://tudominio.com/checkout.html",
+            pending: "https://tudominio.com/gracias.html"
+        },
+        auto_return: "approved"
+    };
+
+    // Guardamos los datos de envío en el session para usarlos luego en la página de gracias
+    sessionStorage.setItem('dm_shipping', JSON.stringify(d));
+
+    try {
+        // Mostramos un aviso de carga en el botón
+        const btnPay = document.getElementById('btn-pay-mp');
+        btnPay.innerText = "Generando pasarela de pago...";
+        btnPay.setAttribute('disabled', 'true');
+
+        // AQUÍ LLAMAS A TU ENDPOINT O DIRECTAMENTE A LA API DE MERCADO PAGO
+        // Nota: Para producción segura de cero, idealmente esto pasa por un mini script tuyo (Node/PHP) 
+        // para no quemar el Access Token de Mercado Pago expuesto en el navegador.
+        
+        console.log("Enviando orden a Mercado Pago:", datosOrden);
+
+        // EJEMPLO DE PETICIÓN DIRECTA A LA API DE PREFERENCIAS DE MERCADO PAGO:
+        const response = await fetch('https://api.mercadopago.com/checkout/preferences', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer TUS_ACCESS_TOKEN_DE_MERCADOPAGO' // Reemplaza con tu token de MP
+            },
+            body: JSON.stringify(datosOrden)
+        });
+
+        const data = await response.json();
+
+        if (data.init_point) {
+            // Redirige al checkout oficial de Mercado Pago (puedes usar sandbox_init_point para pruebas)
+            window.location.href = data.init_point;
+        } else {
+            throw new Error("No se pudo generar el link de pago.");
+        }
+
+    } catch (error) {
+        console.error("Error al procesar el pago:", error);
+        alert("Hubo un error al conectar con Mercado Pago. Inténtalo de nuevo o usa la opción de WhatsApp.");
+        const btnPay = document.getElementById('btn-pay-mp');
+        btnPay.innerText = "Pagar con Mercado Pago";
+        btnPay.removeAttribute('disabled');
     }
+}
 
     function confirmarPorWhatsApp() {
       const d = obtenerDatosEnvio();
