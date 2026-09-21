@@ -754,7 +754,6 @@
     let kilosFacturables = 1;
     let zonaSeleccionadaId = "";
 
-    // Tabla con las 5 zonas y sus valores
     const TABLA_TARIFAS = {
       "zona_bogota": { nombre: "Bogotá D.C. & Sabana", base: 12000, adicional: 3500 },
       "zona_principal": { nombre: "Ciudades Principales", base: 20000, adicional: 5000 },
@@ -763,7 +762,6 @@
       "zona_aerea": { nombre: "Destinos Aéreos (San Andrés, Amazonía, Orinoquía)", base: 38000, adicional: 9000 }
     };
 
-    // Directorio nacional ampliado con 180 municipios clave
     const MUNICIPIOS_COLOMBIA = {
       "Bogotá D.C.": [
         { m: "Bogotá D.C. (Todas las localidades)", z: "zona_bogota" }
@@ -962,6 +960,8 @@
         { m: "Arauca", z: "zona_aerea" },
         { m: "Tame", z: "zona_especial" },
         { m: "Saravena", z: "zona_especial" },
+        { m: "Arauquita", z: "zona_especial" },
+        { m: "Fortul", z: "zona_especial" },
         { m: "Otros municipios Arauca", z: "zona_aerea" }
       ],
       "Casanare": [
@@ -977,16 +977,22 @@
       ],
       "Chocó": [
         { m: "Quibdó", z: "zona_aerea" },
+        { m: "Bahía Solano", z: "zona_aerea" },
+        { m: "Nuquí", z: "zona_aerea" },
+        { m: "Capurganá / Acandí", z: "zona_aerea" },
         { m: "Istmina", z: "zona_especial" },
         { m: "Tadó", z: "zona_especial" },
         { m: "Condoto", z: "zona_especial" },
         { m: "Otros municipios Chocó", z: "zona_aerea" }
       ],
       "Guainía": [
-        { m: "Inírida", z: "zona_aerea" }
+        { m: "Inírida", z: "zona_aerea" },
+        { m: "Otros municipios Guainía", z: "zona_aerea" }
       ],
       "Guaviare": [
-        { m: "San José del Guaviare", z: "zona_aerea" }
+        { m: "San José del Guaviare", z: "zona_aerea" },
+        { m: "Calamar", z: "zona_aerea" },
+        { m: "Otros municipios Guaviare", z: "zona_aerea" }
       ],
       "La Guajira": [
         { m: "Riohacha", z: "zona_intermedio" },
@@ -1003,12 +1009,15 @@
         { m: "Otros municipios Putumayo", z: "zona_aerea" }
       ],
       "Vaupés": [
-        { m: "Mitú", z: "zona_aerea" }
+        { m: "Mitú", z: "zona_aerea" },
+        { m: "Otros municipios Vaupés", z: "zona_aerea" }
       ],
       "Vichada": [
         { m: "Puerto Carreño", z: "zona_aerea" },
         { m: "La Primavera", z: "zona_aerea" },
-        { m: "Cumaribo", z: "zona_aerea" }
+        { m: "Cumaribo", z: "zona_aerea" },
+        { m: "Santa Rosalía", z: "zona_aerea" },
+        { m: "Otros municipios Vichada", z: "zona_aerea" }
       ]
     };
 
