@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contacto | Dirty Monkeys Music Store</title>
   
-  <meta property="og:title" content="Contacto Oficial • Dirty Monkeys Music Store">
+  <meta property="og:title" content="Contacto • Dirty Monkeys Music Store">
   <meta property="og:description" content="Canales de atención directa para pedidos, cotizaciones y atención al cliente en Bogotá y toda Colombia.">
   <meta property="og:image" content="https://res.cloudinary.com/x4s1wwoq/image/upload/v1789753386/logo.png">
   <meta name="theme-color" content="#EAA522">
@@ -216,15 +216,15 @@
     /* CONTENIDO PRINCIPAL */
     main.contact-container {
       flex: 1;
-      max-width: 900px;
+      max-width: 960px;
       width: 100%;
       margin: 0 auto;
-      padding: 60px 24px 20px;
+      padding: 50px 24px 20px;
     }
 
     .contact-header {
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 36px;
     }
 
     .contact-badge {
@@ -253,17 +253,50 @@
     .contact-subtitle {
       color: var(--text-muted);
       font-size: 15px;
-      max-width: 560px;
+      max-width: 580px;
       margin: 0 auto;
       line-height: 1.5;
     }
 
-    /* GRID DE CANALES */
-    .contact-grid {
+    .contact-section-label {
+      font-family: var(--font-display);
+      font-size: 18px;
+      letter-spacing: 1.5px;
+      color: var(--accent);
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .contact-section-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* FILA 1: CANALES DIRECTOS (WHATSAPP + CORREO) */
+    .grid-primary {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 20px;
-      margin-top: 30px;
+      margin-bottom: 36px;
+    }
+
+    /* FILA 2: REDES SOCIALES (INSTAGRAM, TIKTOK, FACEBOOK) */
+    .grid-secondary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .grid-primary,
+      .grid-secondary {
+        grid-template-columns: 1fr;
+      }
     }
 
     .contact-card {
@@ -279,6 +312,7 @@
       position: relative;
       overflow: hidden;
       transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      min-height: 130px;
     }
 
     .contact-card:hover {
@@ -349,25 +383,23 @@
       transform: translateX(4px);
     }
 
-    /* TARJETA DESTACADA WHATSAPP */
-    .card-featured {
-      grid-column: 1 / -1;
-      background: linear-gradient(135deg, rgba(37, 211, 102, 0.08), rgba(23, 23, 23, 0.95));
-      border: 1px solid rgba(37, 211, 102, 0.35);
+    /* ESTILO ESPECIAL WHATSAPP */
+    .card-whatsapp {
+      border-color: rgba(37, 211, 102, 0.35);
+      background: linear-gradient(135deg, rgba(37, 211, 102, 0.07), rgba(23, 23, 23, 0.95));
     }
 
-    .card-featured:hover {
+    .card-whatsapp:hover {
       border-color: var(--whatsapp);
-      box-shadow: 0 10px 30px rgba(37, 211, 102, 0.15);
+      box-shadow: 0 10px 30px rgba(37, 211, 102, 0.18);
     }
 
-    .card-featured .icon-box {
+    .card-whatsapp .icon-box {
       background: rgba(37, 211, 102, 0.15);
       border-color: rgba(37, 211, 102, 0.3);
-      color: var(--whatsapp);
     }
 
-    .card-featured .icon-box svg { fill: var(--whatsapp); }
+    .card-whatsapp .icon-box svg { fill: var(--whatsapp); }
 
     /* FOOTER UNIFICADO */
     footer#contacto {
@@ -499,26 +531,28 @@
   <!-- SECCIÓN CONTACTO -->
   <main class="contact-container">
     <div class="contact-header">
-      <span class="contact-badge">Canales de Atención • Tienda Virtual</span>
+      <span class="contact-badge">Atención Directa • Bogotá</span>
       <h1 class="contact-title">CANALES DE CONTACTO</h1>
       <p class="contact-subtitle">
-        ¿Tienes dudas sobre un prensaje, buscas un disco en particular o necesitas rastrear tu envío? Escríbenos por cualquiera de nuestros medios oficiales.
+        ¿Tienes dudas sobre un prensaje, buscas un disco en particular o necesitas rastrear tu envío? Comunícate por cualquiera de nuestros medios oficiales.
       </p>
     </div>
 
-    <div class="contact-grid">
+    <!-- BLOQUE 1: ATENCIÓN DIRECTA (WHATSAPP + CORREO) -->
+    <div class="contact-section-label">Canales Directos</div>
+    <div class="grid-primary">
       
-      <!-- CANAL 1: WHATSAPP (DESTACADO) -->
+      <!-- CANAL 1: WHATSAPP -->
       <a href="https://wa.me/@dmonkeysmusic?text=%C2%A1Hola,%20Dirty%20Monkeys!%20Me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20acerca%20de..." 
          target="_blank" 
          rel="noopener noreferrer" 
-         class="contact-card card-featured">
+         class="contact-card card-whatsapp">
         <div class="card-top">
           <div class="icon-box">
             <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
           </div>
           <div class="card-meta">
-            <h3>WHATSAPP OFICIAL</h3>
+            <h3>WHATSAPP</h3>
             <span>Atención rápida & cotizaciones</span>
           </div>
         </div>
@@ -533,7 +567,7 @@
          class="contact-card">
         <div class="card-top">
           <div class="icon-box">
-            <!-- Icono Oficial Gmail Multicolores -->
+            <!-- Logo oficial Gmail Multicolor -->
             <svg viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6z" opacity=".2"/>
               <path fill="#EA4335" d="M20 4H4C2.9 4 2 4.9 2 6l10 6.25L22 6c0-1.1-.9-2-2-2z"/>
@@ -554,6 +588,12 @@
         </div>
       </a>
 
+    </div>
+
+    <!-- BLOQUE 2: REDES SOCIALES (INSTAGRAM, TIKTOK, FACEBOOK) -->
+    <div class="contact-section-label">Redes Sociales</div>
+    <div class="grid-secondary">
+
       <!-- CANAL 3: INSTAGRAM -->
       <a href="https://www.instagram.com/dmonkeysmusic" 
          target="_blank" 
@@ -565,7 +605,7 @@
           </div>
           <div class="card-meta">
             <h3>INSTAGRAM</h3>
-            <span>Novedades & ingresos semanales</span>
+            <span>Novedades & stock semanal</span>
           </div>
         </div>
         <div class="card-val">
@@ -585,7 +625,7 @@
           </div>
           <div class="card-meta">
             <h3>TIKTOK</h3>
-            <span>Videos de vinilos en tornamesa</span>
+            <span>Vinilos sonando en tornamesa</span>
           </div>
         </div>
         <div class="card-val">
@@ -636,7 +676,7 @@
           <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.85.12V9.4a6.33 6.33 0 0 0-.85-.06A6.34 6.34 0 0 0 3.15 15.7a6.34 6.34 0 0 0 10.83 4.46V11.8a8.28 8.28 0 0 0 5.61 2.2v-3.45a4.85 4.85 0 0 1-3.77-1.86z"/></svg>
           TikTok
         </a>
-        <a href="https://www.facebook.com/share/1EgHrmYQM5/" target="_blank" rel="noopener noreferrer" title="Facebook Dirty Monkeys">
+        <a href="https://www.facebook.com/dmonkeysmusic/" target="_blank" rel="noopener noreferrer" title="Facebook Dirty Monkeys">
           <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
           Facebook
         </a>
