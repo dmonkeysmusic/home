@@ -604,7 +604,7 @@
     <div id="checkout-active-view">
       <div class="checkout-header">
         <h1>FINALIZAR PEDIDO</h1>
-        <p>Selecciona tu departamento y municipio para liquidar el flete de forma automática.</p>
+        <p>Selecciona tu departamento y municipio para liquidar automáticamente el flete según el peso.</p>
       </div>
 
       <div class="checkout-layout">
@@ -629,7 +629,6 @@
               <input type="email" id="correo" placeholder="correo@ejemplo.com" required>
             </div>
 
-            <!-- DESPLEGABLES ANIDADOS (DEPARTAMENTO Y MUNICIPIO) -->
             <div class="form-row">
               <div class="form-group">
                 <label for="departamento-select">Departamento *</label>
@@ -750,22 +749,21 @@
   </footer>
 
   <script>
-    const SHEETS_ENVIOS_CSV_URL = 'TU_URL_DE_GOOGLE_SHEETS_ENVIOS_CSV_AQUI';
-
     let carrito = JSON.parse(localStorage.getItem('dm_cart') || '[]');
     let costoEnvioActual = 0;
     let kilosFacturables = 1;
     let zonaSeleccionadaId = "";
 
-    // Tabla base de tarifas
+    // Tabla con las 5 zonas y sus valores
     const TABLA_TARIFAS = {
       "zona_bogota": { nombre: "Bogotá D.C. & Sabana", base: 12000, adicional: 3500 },
       "zona_principal": { nombre: "Ciudades Principales", base: 20000, adicional: 5000 },
       "zona_intermedio": { nombre: "Municipios Intermedios", base: 23000, adicional: 5500 },
-      "zona_especial": { nombre: "Destinos Especiales / Difícil Acceso", base: 32000, adicional: 7500 }
+      "zona_especial": { nombre: "Destinos Especiales (Terrestre lejano)", base: 32000, adicional: 7500 },
+      "zona_aerea": { nombre: "Destinos Aéreos (San Andrés, Amazonía, Orinoquía)", base: 38000, adicional: 9000 }
     };
 
-    // Directorio nacional de Departamentos y Municipios
+    // Directorio nacional ampliado con 180 municipios clave
     const MUNICIPIOS_COLOMBIA = {
       "Bogotá D.C.": [
         { m: "Bogotá D.C. (Todas las localidades)", z: "zona_bogota" }
@@ -779,9 +777,14 @@
         { m: "Mosquera", z: "zona_bogota" },
         { m: "Madrid", z: "zona_bogota" },
         { m: "Cota", z: "zona_bogota" },
+        { m: "Tocancipá", z: "zona_bogota" },
+        { m: "Sopó", z: "zona_bogota" },
+        { m: "La Calera", z: "zona_bogota" },
         { m: "Facatativá", z: "zona_intermedio" },
         { m: "Girardot", z: "zona_intermedio" },
         { m: "Fusagasugá", z: "zona_intermedio" },
+        { m: "Villeta", z: "zona_intermedio" },
+        { m: "Anapoima", z: "zona_intermedio" },
         { m: "Otros municipios Cundinamarca", z: "zona_intermedio" }
       ],
       "Antioquia": [
@@ -790,8 +793,16 @@
         { m: "Itagüí", z: "zona_principal" },
         { m: "Envigado", z: "zona_principal" },
         { m: "Sabaneta", z: "zona_principal" },
+        { m: "Copacabana", z: "zona_principal" },
+        { m: "Caldas", z: "zona_principal" },
         { m: "Rionegro", z: "zona_intermedio" },
+        { m: "La Ceja", z: "zona_intermedio" },
+        { m: "Marinilla", z: "zona_intermedio" },
+        { m: "Guarne", z: "zona_intermedio" },
         { m: "Apartadó", z: "zona_intermedio" },
+        { m: "Turbo", z: "zona_intermedio" },
+        { m: "Caucasia", z: "zona_intermedio" },
+        { m: "Santa Fe de Antioquia", z: "zona_intermedio" },
         { m: "Otros municipios Antioquia", z: "zona_intermedio" }
       ],
       "Valle del Cauca": [
@@ -799,10 +810,12 @@
         { m: "Palmira", z: "zona_principal" },
         { m: "Yumbo", z: "zona_principal" },
         { m: "Jamundí", z: "zona_principal" },
-        { m: "Buga", z: "zona_intermedio" },
+        { m: "Buga (Guadalajara de Buga)", z: "zona_intermedio" },
         { m: "Tuluá", z: "zona_intermedio" },
         { m: "Cartago", z: "zona_intermedio" },
         { m: "Buenaventura", z: "zona_intermedio" },
+        { m: "Zarzal", z: "zona_intermedio" },
+        { m: "Sevilla", z: "zona_intermedio" },
         { m: "Otros municipios Valle", z: "zona_intermedio" }
       ],
       "Atlántico": [
@@ -810,6 +823,8 @@
         { m: "Soledad", z: "zona_principal" },
         { m: "Malambo", z: "zona_principal" },
         { m: "Puerto Colombia", z: "zona_principal" },
+        { m: "Sabanalarga", z: "zona_intermedio" },
+        { m: "Baranoa", z: "zona_intermedio" },
         { m: "Otros municipios Atlántico", z: "zona_intermedio" }
       ],
       "Santander": [
@@ -819,26 +834,37 @@
         { m: "Piedecuesta", z: "zona_principal" },
         { m: "Barrancabermeja", z: "zona_intermedio" },
         { m: "San Gil", z: "zona_intermedio" },
+        { m: "Socorro", z: "zona_intermedio" },
+        { m: "Barbosa", z: "zona_intermedio" },
         { m: "Otros municipios Santander", z: "zona_intermedio" }
       ],
       "Bolívar": [
         { m: "Cartagena", z: "zona_principal" },
+        { m: "Turbaco", z: "zona_intermedio" },
+        { m: "Arjona", z: "zona_intermedio" },
         { m: "Magangué", z: "zona_intermedio" },
+        { m: "El Carmen de Bolívar", z: "zona_intermedio" },
         { m: "Otros municipios Bolívar", z: "zona_intermedio" }
       ],
       "Risaralda": [
         { m: "Pereira", z: "zona_principal" },
         { m: "Dosquebradas", z: "zona_principal" },
+        { m: "Santa Rosa de Cabal", z: "zona_intermedio" },
         { m: "Otros municipios Risaralda", z: "zona_intermedio" }
       ],
       "Caldas": [
         { m: "Manizales", z: "zona_principal" },
         { m: "Villamaría", z: "zona_principal" },
+        { m: "Chinchiná", z: "zona_intermedio" },
+        { m: "La Dorada", z: "zona_intermedio" },
         { m: "Otros municipios Caldas", z: "zona_intermedio" }
       ],
       "Quindío": [
         { m: "Armenia", z: "zona_principal" },
         { m: "Calarcá", z: "zona_intermedio" },
+        { m: "Circasia", z: "zona_intermedio" },
+        { m: "Montenegro", z: "zona_intermedio" },
+        { m: "La Tebaida", z: "zona_intermedio" },
         { m: "Otros municipios Quindío", z: "zona_intermedio" }
       ],
       "Norte de Santander": [
@@ -847,106 +873,142 @@
         { m: "Villa del Rosario", z: "zona_principal" },
         { m: "Ocaña", z: "zona_intermedio" },
         { m: "Pamplona", z: "zona_intermedio" },
+        { m: "Tibú", z: "zona_especial" },
         { m: "Otros municipios N. Santander", z: "zona_intermedio" }
       ],
       "Tolima": [
         { m: "Ibagué", z: "zona_principal" },
         { m: "Espinal", z: "zona_intermedio" },
         { m: "Melgar", z: "zona_intermedio" },
+        { m: "Honda", z: "zona_intermedio" },
+        { m: "Líbano", z: "zona_intermedio" },
         { m: "Otros municipios Tolima", z: "zona_intermedio" }
       ],
       "Meta": [
         { m: "Villavicencio", z: "zona_principal" },
         { m: "Acacías", z: "zona_intermedio" },
-        { m: "Otros municipios Meta", z: "zona_intermedio" }
+        { m: "Granada", z: "zona_intermedio" },
+        { m: "Puerto López", z: "zona_intermedio" },
+        { m: "Otros municipios Meta", z: "zona_especial" }
       ],
       "Huila": [
         { m: "Neiva", z: "zona_principal" },
         { m: "Pitalito", z: "zona_intermedio" },
+        { m: "Garzón", z: "zona_intermedio" },
+        { m: "La Plata", z: "zona_intermedio" },
         { m: "Otros municipios Huila", z: "zona_intermedio" }
       ],
       "Nariño": [
         { m: "Pasto", z: "zona_principal" },
         { m: "Ipiales", z: "zona_intermedio" },
-        { m: "Tumaco", z: "zona_intermedio" },
+        { m: "Tumaco", z: "zona_especial" },
+        { m: "Túquerres", z: "zona_especial" },
         { m: "Otros municipios Nariño", z: "zona_especial" }
       ],
       "Córdoba": [
         { m: "Montería", z: "zona_principal" },
         { m: "Cereté", z: "zona_intermedio" },
+        { m: "Lorica", z: "zona_intermedio" },
+        { m: "Sahagún", z: "zona_intermedio" },
+        { m: "Montelíbano", z: "zona_intermedio" },
         { m: "Otros municipios Córdoba", z: "zona_intermedio" }
       ],
       "Cesar": [
         { m: "Valledupar", z: "zona_principal" },
         { m: "Aguachica", z: "zona_intermedio" },
+        { m: "Codazzi", z: "zona_intermedio" },
         { m: "Otros municipios Cesar", z: "zona_intermedio" }
       ],
       "Magdalena": [
         { m: "Santa Marta", z: "zona_principal" },
         { m: "Ciénaga", z: "zona_intermedio" },
+        { m: "Fundación", z: "zona_intermedio" },
+        { m: "Plato", z: "zona_intermedio" },
         { m: "Otros municipios Magdalena", z: "zona_intermedio" }
       ],
       "Cauca": [
         { m: "Popayán", z: "zona_principal" },
         { m: "Santander de Quilichao", z: "zona_intermedio" },
+        { m: "Puerto Tejada", z: "zona_intermedio" },
+        { m: "Patía (El Bordo)", z: "zona_especial" },
         { m: "Otros municipios Cauca", z: "zona_especial" }
       ],
       "Boyacá": [
         { m: "Tunja", z: "zona_principal" },
         { m: "Duitama", z: "zona_intermedio" },
         { m: "Sogamoso", z: "zona_intermedio" },
+        { m: "Chiquinquirá", z: "zona_intermedio" },
+        { m: "Puerto Boyacá", z: "zona_intermedio" },
+        { m: "Paipa", z: "zona_intermedio" },
+        { m: "Villa de Leyva", z: "zona_intermedio" },
         { m: "Otros municipios Boyacá", z: "zona_intermedio" }
       ],
       "Sucre": [
         { m: "Sincelejo", z: "zona_principal" },
         { m: "Corozal", z: "zona_intermedio" },
+        { m: "Sampués", z: "zona_intermedio" },
         { m: "Otros municipios Sucre", z: "zona_intermedio" }
       ],
       "San Andrés y Providencia": [
-        { m: "San Andrés Isla", z: "zona_especial" },
-        { m: "Providencia", z: "zona_especial" }
+        { m: "San Andrés Isla", z: "zona_aerea" },
+        { m: "Providencia", z: "zona_aerea" }
       ],
       "Amazonas": [
-        { m: "Leticia", z: "zona_especial" },
-        { m: "Otros municipios Amazonas", z: "zona_especial" }
+        { m: "Leticia", z: "zona_aerea" },
+        { m: "Puerto Nariño", z: "zona_aerea" },
+        { m: "Otros municipios Amazonas", z: "zona_aerea" }
       ],
       "Arauca": [
-        { m: "Arauca", z: "zona_especial" },
-        { m: "Otros municipios Arauca", z: "zona_especial" }
+        { m: "Arauca", z: "zona_aerea" },
+        { m: "Tame", z: "zona_especial" },
+        { m: "Saravena", z: "zona_especial" },
+        { m: "Otros municipios Arauca", z: "zona_aerea" }
       ],
       "Casanare": [
         { m: "Yopal", z: "zona_intermedio" },
+        { m: "Aguazul", z: "zona_intermedio" },
+        { m: "Villanueva", z: "zona_intermedio" },
         { m: "Otros municipios Casanare", z: "zona_especial" }
       ],
       "Caquetá": [
         { m: "Florencia", z: "zona_intermedio" },
+        { m: "San Vicente del Caguán", z: "zona_especial" },
         { m: "Otros municipios Caquetá", z: "zona_especial" }
       ],
       "Chocó": [
-        { m: "Quibdó", z: "zona_especial" },
-        { m: "Otros municipios Chocó", z: "zona_especial" }
+        { m: "Quibdó", z: "zona_aerea" },
+        { m: "Istmina", z: "zona_especial" },
+        { m: "Tadó", z: "zona_especial" },
+        { m: "Condoto", z: "zona_especial" },
+        { m: "Otros municipios Chocó", z: "zona_aerea" }
       ],
       "Guainía": [
-        { m: "Inírida", z: "zona_especial" }
+        { m: "Inírida", z: "zona_aerea" }
       ],
       "Guaviare": [
-        { m: "San José del Guaviare", z: "zona_especial" }
+        { m: "San José del Guaviare", z: "zona_aerea" }
       ],
       "La Guajira": [
         { m: "Riohacha", z: "zona_intermedio" },
         { m: "Maicao", z: "zona_intermedio" },
+        { m: "Fonseca", z: "zona_intermedio" },
+        { m: "San Juan del Cesar", z: "zona_intermedio" },
+        { m: "Uribia (Alta Guajira)", z: "zona_aerea" },
         { m: "Otros municipios La Guajira", z: "zona_especial" }
       ],
       "Putumayo": [
-        { m: "Mocoa", z: "zona_especial" },
-        { m: "Puerto Asís", z: "zona_especial" },
-        { m: "Otros municipios Putumayo", z: "zona_especial" }
+        { m: "Mocoa", z: "zona_intermedio" },
+        { m: "Puerto Asís", z: "zona_intermedio" },
+        { m: "Orito", z: "zona_especial" },
+        { m: "Otros municipios Putumayo", z: "zona_aerea" }
       ],
       "Vaupés": [
-        { m: "Mitú", z: "zona_especial" }
+        { m: "Mitú", z: "zona_aerea" }
       ],
       "Vichada": [
-        { m: "Puerto Carreño", z: "zona_especial" }
+        { m: "Puerto Carreño", z: "zona_aerea" },
+        { m: "La Primavera", z: "zona_aerea" },
+        { m: "Cumaribo", z: "zona_aerea" }
       ]
     };
 
@@ -974,7 +1036,6 @@
 
     function calcularPeso() {
       const cant = carrito.length;
-      // 300g por vinilo + 200g base de empaque seguro
       const gramos = (cant * 300) + 200;
       const kgEstimado = (gramos / 1000).toFixed(1);
       kilosFacturables = Math.max(1, Math.ceil(gramos / 1000));
