@@ -1158,7 +1158,6 @@
         btnWs.setAttribute('disabled', 'true');
         alertMsg.style.color = '#e67e22';
         
-        // Validaciones específicas con el mensaje solicitado
         if (celular && !celularValido) {
           alertMsg.innerText = '* El celular debe tener exactamente 10 dígitos numéricos.';
         } else if (correo && !correoValido) {
@@ -1229,7 +1228,6 @@
 
     async function procesarPago() {
         const d = obtenerDatosEnvio();
-        const subtotal = calcularSubtotal();
 
         let itemsCheckout = carrito.map(item => ({
             title: item.titulo,
@@ -1245,12 +1243,16 @@
             unit_price: parseFloat(d.flete)
         });
 
+        // CORRECCIÓN CLAVE: Estructura exacta que espera Mercado Pago sin romper Make
         const datosOrden = {
             items: itemsCheckout,
             payer: {
                 name: d.nombre,
                 email: d.correo,
-                phone: d.celular
+                phone: {
+                    area_code: "57",
+                    number: d.celular
+                }
             },
             shipping_address: {
                 department: d.departamento,
