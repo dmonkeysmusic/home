@@ -1243,9 +1243,9 @@
             unit_price: parseFloat(d.flete)
         });
 
-        // CORRECCIÓN CLAVE: Estructura exacta que espera Mercado Pago sin romper Make
+        // ITEMS SERIALIZADOS A STRING PARA EVITAR CUALQUIER CONFLICTO DE TIPOS EN MAKE
         const datosOrden = {
-            items: itemsCheckout,
+            items: JSON.stringify(itemsCheckout),
             payer: {
                 name: d.nombre,
                 email: d.correo,
