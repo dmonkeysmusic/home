@@ -1243,9 +1243,9 @@
             unit_price: parseFloat(d.flete)
         });
 
-        // ITEMS SERIALIZADOS A STRING PARA EVITAR CUALQUIER CONFLICTO DE TIPOS EN MAKE
+        // ESTRUCTURA PLANA Y LIMPIA QUE NO ROMPE NINGÚN ANALIZADOR
         const datosOrden = {
-            items: JSON.stringify(itemsCheckout),
+            items: itemsCheckout,
             payer: {
                 name: d.nombre,
                 email: d.correo,
