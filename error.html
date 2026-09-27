@@ -311,5 +311,11 @@
       </div>
     </div>
   </footer>
+<script>
+    // Si el carrito está vacío pero hay un respaldo guardado de la compra que falló, lo restauramos
+    if ((!localStorage.getItem('dm_cart') || JSON.parse(localStorage.getItem('dm_cart') || '[]').length === 0) && sessionStorage.getItem('dm_cart_backup')) {
+      localStorage.setItem('dm_cart', sessionStorage.getItem('dm_cart_backup'));
+    }
+  </script>
 </body>
 </html>
