@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pago Pendiente | Dirty Monkeys Music Store</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-main: #0d0d0d;
+      --bg-surface: #171717;
+      --bg-card: #1f1f1f;
+      --accent: #EAA522;
+      --accent-hover: #ffb834;
+      --text-main: #f5f5f5;
+      --text-muted: #9e9e9e;
+      --border: #2c2c2c;
+      --pending: #f39c12;
+      --whatsapp: #25D366;
+      --font-display: 'Bebas Neue', Impact, sans-serif;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    header.navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13, 13, 13, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+      line-height: 1 !important;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand img { width: 44px; height: auto; display: block; }
+    .brand-title {
+      font-family: var(--font-display) !important;
+      font-size: 26px !important;
+      letter-spacing: 2px !important;
+      line-height: 0.9 !important;
+      color: var(--accent);
+    }
+    .brand-sub {
+      font-family: var(--font-display) !important;
+      font-size: 11px !important;
+      letter-spacing: 3px !important;
+      color: #9e9e9e;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    nav.nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    nav.nav-links a {
+      color: #f5f5f5 !important;
+      text-decoration: none;
+      font-family: var(--font-display) !important;
+      font-size: 18px !important;
+      font-weight: 400 !important;
+      text-transform: uppercase;
+      letter-spacing: 1.5px !important;
+      line-height: 1 !important;
+      transition: color 0.2s ease;
+    }
+
+    nav.nav-links a:hover { color: var(--accent) !important; }
+
+    .cart-trigger {
+      background: var(--accent) !important;
+      color: #000000 !important;
+      border: none !important;
+      padding: 8px 16px !important;
+      border-radius: 6px !important;
+      font-family: var(--font-display) !important;
+      font-size: 18px !important;
+      letter-spacing: 1px !important;
+      line-height: 1 !important;
+      cursor: pointer;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      text-decoration: none !important;
+      box-sizing: border-box !important;
+      transition: transform 0.15s ease, background 0.2s ease;
+    }
+
+    .cart-trigger:hover { background: var(--accent-hover) !important; transform: translateY(-1px); }
+    .cart-trigger span:not(.cart-badge) { font-family: var(--font-display) !important; font-size: 18px !important; line-height: 1 !important; letter-spacing: 1px !important; color: #000000 !important; }
+    .cart-badge { background-color: #000000 !important; color: #ffffff !important; font-size: 12px !important; font-family: var(--font-sans) !important; font-weight: 700 !important; line-height: 1 !important; border-radius: 99px !important; padding: 2px 7px !important; display: inline-flex !important; align-items: center !important; justify-content: center; }
+
+    .menu-toggle {
+      display: none;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (max-width: 768px) {
+      header.navbar { padding: 10px 16px; }
+      .brand img { width: 36px; }
+      .brand-title { font-size: 22px !important; }
+      .brand-sub { font-size: 9px !important; }
+      .nav-right { gap: 10px; }
+      .cart-trigger { padding: 6px 12px !important; font-size: 16px !important; }
+      .cart-trigger span:not(.cart-badge) { font-size: 16px !important; }
+      .menu-toggle { display: inline-flex; }
+      nav.nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(13, 13, 13, 0.98); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); flex-direction: column; align-items: stretch; padding: 16px 20px; gap: 12px; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.9); }
+      nav.nav-links.active { display: flex; }
+      nav.nav-links a { font-size: 20px !important; padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+    }
+
+    main.thank-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 24px;
+    }
+
+    .thank-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      max-width: 650px;
+      width: 100%;
+      padding: 48px 32px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .thank-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--pending), var(--accent));
+    }
+
+    .icon-pending {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: rgba(243, 156, 18, 0.12);
+      border: 2px solid var(--pending);
+      color: var(--pending);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 32px;
+    }
+
+    .status-pill {
+      display: inline-block;
+      background: #2b2210;
+      color: var(--pending);
+      border: 1px solid #5a4214;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+      padding: 6px 14px; border-radius: 20px; margin-bottom: 16px;
+    }
+
+    .thank-title {
+      font-family: var(--font-display);
+      font-size: clamp(34px, 5vw, 48px);
+      line-height: 0.95; letter-spacing: 2px;
+      color: #fff; margin-bottom: 12px;
+    }
+
+    .thank-subtitle {
+      color: var(--text-muted);
+      font-size: 15px; margin-bottom: 30px; line-height: 1.5;
+    }
+
+    .info-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px; text-align: left; margin-bottom: 32px;
+    }
+
+    .info-panel h3 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 8px; }
+    .info-panel p { font-size: 13px; color: var(--text-main); line-height: 1.6; }
+    .info-panel small { display: block; margin-top: 10px; font-size: 11px; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 8px; }
+
+    .actions-box { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+
+    .btn-ws {
+      background: var(--whatsapp); color: #000; font-weight: 700;
+      padding: 12px 24px; border-radius: 6px; font-size: 14px; letter-spacing: 1px;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+      transition: transform 0.15s, background 0.2s;
+    }
+    .btn-ws:hover { background: #20ba59; transform: translateY(-2px); }
+    .btn-ws svg { width: 18px; height: 18px; fill: currentColor; }
+
+    .btn-home {
+      border: 1px solid var(--border); color: #fff; background: transparent;
+      padding: 12px 24px; border-radius: 6px; font-size: 14px; font-weight: 600; letter-spacing: 1px;
+      text-decoration: none; display: inline-flex; align-items: center; transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-home:hover { border-color: var(--accent); color: var(--accent); }
+
+    footer#contacto { border-top: 1px solid var(--border) !important; padding: 48px 24px 32px !important; text-align: center !important; background: #0a0a0a !important; margin-top: 60px !important; width: 100% !important; box-sizing: border-box !important; }
+    .footer-content { max-width: 600px !important; margin: 0 auto !important; }
+    .footer-logo { font-family: var(--font-display) !important; font-size: 30px !important; line-height: 1 !important; color: var(--accent) !important; letter-spacing: 2px !important; margin-bottom: 8px !important; text-transform: uppercase !important; }
+    .footer-tagline { color: var(--text-muted) !important; font-size: 14px !important; margin-bottom: 22px !important; }
+    .footer-socials { display: flex !important; justify-content: center !important; gap: 12px !important; margin-bottom: 24px !important; flex-wrap: wrap !important; }
+    .footer-socials a { color: var(--text-main) !important; text-decoration: none !important; font-size: 13px !important; font-weight: 600 !important; border: 1px solid var(--border) !important; padding: 8px 14px !important; border-radius: 6px !important; display: inline-flex !important; align-items: center !important; gap: 8px !important; }
+    .footer-copy { font-size: 12px !important; color: #666666 !important; border-top: 1px solid #1a1a1a !important; padding-top: 20px !important; display: flex !important; align-items: center !important; justify-content: center !important; gap: 6px !important; }
+    .flag-colombia { width: 18px; height: 12px; display: inline-block; border-radius: 2px; }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="brand">
+      <img src="https://res.cloudinary.com/x4s1wwoq/image/upload/v1789753386/logo.png" alt="Dirty Monkeys Logo">
+      <div>
+        <div class="brand-title">DIRTY MONKEYS</div>
+        <div class="brand-sub">MUSIC STORE • BOGOTÁ</div>
+      </div>
+    </a>
+    <div class="nav-right">
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html">Catálogo</a>
+        <a href="giftcards.html">Gift Cards</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
+      <button class="cart-trigger" onclick="window.location.href='index.html'">
+        <span>Carrito</span>
+        <span class="cart-badge">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="thank-container">
+    <div class="thank-card">
+      <div class="icon-pending">⏳</div>
+      <div class="status-pill">Pago Pendiente</div>
+      
+      <h1 class="thank-title">TU PAGO ESTÁ EN PROCESO</h1>
+      <p class="thank-subtitle">Hemos registrado tu orden y nos encontramos a la espera de la confirmación de la entidad de pago.</p>
+
+      <div class="info-panel">
+        <h3>¿Qué pasa ahora?</h3>
+        <p>
+          En cuanto el pago sea acreditado por el banco o medio de pago seleccionado, el sistema procesará tu orden automáticamente y te enviaremos la confirmación a tu correo electrónico. Si elegiste pago en efectivo, recuerda realizarlo a tiempo con tu comprobante para que el sistema procese tu pedido sin inconvenientes.
+        </p>
+        <small>*Si ya realizaste el pago y persiste este estado, contáctanos por WhatsApp con tu comprobante.</small>
+      </div>
+
+      <div class="actions-box">
+        <a href="https://wa.me/@dmonkeysmusic?text=%C2%A1Hola,%20Dirty%20Monkeys!%20Hice%20un%20pedido%20pero%20mi%20pago%20está%20pendiente..." target="_blank" rel="noopener noreferrer" class="btn-ws">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          <span>Escríbenos por WhatsApp</span>
+        </a>
+        <a href="index.html" class="btn-home">Volver a la Tienda</a>
+      </div>
+    </div>
+  </main>
+
+  <footer id="contacto">
+    <div class="footer-content">
+      <div class="footer-logo">DIRTY MONKEYS MUSIC STORE</div>
+      <p class="footer-tagline">Tienda de vinilos y coleccionables. Envíos a todo Colombia.</p>
+      <div class="footer-copy">
+        <span>&copy; 2026 Dirty Monkeys Music Store. Bogotá, Colombia</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
