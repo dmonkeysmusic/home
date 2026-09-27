@@ -1237,16 +1237,7 @@
             unit_price: parseFloat(item.precio) || 0
         }));
 
-        // 2. OBLIGATORIO: Agregar el flete como un ítem más para que viaje en la petición
-        if (d.flete && d.flete > 0) {
-            itemsCheckout.push({
-                title: `Envío asegurado (${d.municipio}, ${d.departamento}) - ~${d.pesoFacturado}kg`,
-                quantity: 1,
-                currency_id: "COP",
-                unit_price: parseFloat(d.flete)
-            });
-        }
-
+        // 2. LA CLAVE DE MAKE: El flete se separa enviando el objeto 'shipments' explícito
         const datosOrden = {
             items: itemsCheckout,
             payer: {
@@ -1256,7 +1247,9 @@
                     area_code: "57",
                     number: String(d.celular)
                 }
-            }
+            },
+            shipment_cost: parseFloat(d.flete) || 0,
+            shipment_title: `Envío asegurado (${d.municipio}, ${d.departamento}) - ~${d.pesoFacturado}kg`
         };
 
         sessionStorage.setItem('dm_shipping', JSON.stringify(d));
