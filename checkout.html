@@ -1039,8 +1039,14 @@
       }
     });
 
+    function convertirPrecioCOP(valor) {
+      if (typeof valor === 'number') return Math.round(valor);
+      const digitos = String(valor ?? '').replace(/[^0-9]/g, '');
+      return Number(digitos) || 0;
+    }
+
     function calcularSubtotal() {
-      return carrito.reduce((acc, item) => acc + (parseInt(item.precio, 10) || 0), 0);
+      return carrito.reduce((acc, item) => acc + convertirPrecioCOP(item.precio), 0);
     }
 
     function calcularPeso() {
@@ -1234,8 +1240,8 @@
             title: String(item.titulo || "Vinilo Coleccionable"),
             quantity: parseInt(item.cantidad, 10) || 1,
             currency_id: "COP",
-            unit_price: parseFloat(item.precio) || 0
-        }));
+            unit_price: convertirPrecioCOP(item.precio)
+        })).filter(item => item.title && item.unit_price > 0);
 
         // 2. LA CLAVE DE MAKE: El flete se separa enviando el objeto 'shipments' explícito
         const datosOrden = {
@@ -1248,8 +1254,15 @@
                     number: String(d.celular)
                 }
             },
-            shipment_cost: parseFloat(d.flete) || 0,
-            shipment_title: `Envío asegurado (${d.municipio}, ${d.departamento}) - ~${d.pesoFacturado}kg`
+            shipment_cost: Number(d.flete) || 0,
+            shipping_details: {
+                departamento: d.departamento,
+                municipio: d.municipio,
+                barrio: d.barrio,
+                direccion: d.direccion,
+                notas: d.notas,
+                pesoFacturado: d.pesoFacturado
+            }
         };
 
         sessionStorage.setItem('dm_shipping', JSON.stringify(d));
