@@ -1266,6 +1266,8 @@
         };
 
         sessionStorage.setItem('dm_shipping', JSON.stringify(d));
+      // Copia de seguridad exacta del carrito por si el pago se cae
+        sessionStorage.setItem('dm_cart_backup', JSON.stringify(carrito));
         const btnPay = document.getElementById('btn-pay-mp');
 
         try {
