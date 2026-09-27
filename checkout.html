@@ -1229,7 +1229,7 @@
     async function procesarPago() {
         const d = obtenerDatosEnvio();
 
-        // MAPEO LIMPIO DE CADA VINILO PARA QUE MERCADO PAGO LOS MUESTRE EN EL RESUMEN
+        // 1. Mapeamos los vinilos del carrito
         let itemsCheckout = carrito.map(item => ({
             title: String(item.titulo || "Vinilo Coleccionable"),
             quantity: parseInt(item.cantidad, 10) || 1,
@@ -1237,9 +1237,9 @@
             unit_price: parseFloat(item.precio) || 0
         }));
 
-        // AÑADIR EL FLETE COMO UN ÍTEM DESGLOSADO EN EL PAGO
+        // 2. Metemos el flete como un ítem independiente explícito
         itemsCheckout.push({
-            title: `Envío asegurado (${d.municipio}, ${d.departamento}) - ~${d.pesoFacturado}kg`,
+            title: `Envío asegurado (${d.municipio}, ${d.departamento})`,
             quantity: 1,
             currency_id: "COP",
             unit_price: parseFloat(d.flete) || 0
@@ -1248,11 +1248,11 @@
         const datosOrden = {
             items: itemsCheckout,
             payer: {
-                name: d.nombre,
-                email: d.correo,
+                name: String(d.nombre),
+                email: String(d.correo),
                 phone: {
                     area_code: "57",
-                    number: d.celular
+                    number: String(d.celular)
                 }
             }
         };
