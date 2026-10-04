@@ -296,6 +296,18 @@
       border-color: var(--accent);
     }
 
+    .municipio-notice {
+      display: none;
+      font-size: 12px;
+      color: var(--accent);
+      background: rgba(234, 165, 34, 0.08);
+      border: 1px solid rgba(234, 165, 34, 0.25);
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
     .form-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -641,6 +653,9 @@
                 <select id="municipio-select" onchange="alCambiarMunicipio(); comprobarCampos();" disabled required>
                   <option value="">-- Primero elige departamento --</option>
                 </select>
+                <div id="municipio-notice" class="municipio-notice">
+                  💡 <strong>Nota importante:</strong> Por favor especifica en el campo <em>"Notas de Entrega"</em> (abajo) el nombre exacto de tu municipio, pueblo o vereda para garantizar un envío exitoso.
+                </div>
               </div>
             </div>
 
@@ -1077,6 +1092,9 @@
 
       muniSelect.innerHTML = '<option value="">-- Selecciona Ciudad o Municipio --</option>';
 
+      // Ocultar la nota al cambiar de depto
+      document.getElementById('municipio-notice').style.display = 'none';
+
       if (!depto) {
         muniSelect.setAttribute('disabled', 'true');
         zonaSeleccionadaId = "";
@@ -1097,11 +1115,20 @@
     function alCambiarMunicipio() {
       const muniSelect = document.getElementById('municipio-select');
       const opt = muniSelect.options[muniSelect.selectedIndex];
+      const noticeBox = document.getElementById('municipio-notice');
 
       if (opt && opt.value) {
         zonaSeleccionadaId = opt.getAttribute('data-zona');
+        
+        // Mostrar aviso dinámico si selecciona una opción genérica "Otros municipios"
+        if (opt.value.toLowerCase().startsWith('otros municipios')) {
+          noticeBox.style.display = 'block';
+        } else {
+          noticeBox.style.display = 'none';
+        }
       } else {
         zonaSeleccionadaId = "";
+        noticeBox.style.display = 'none';
       }
 
       recalcularFlete();
@@ -1235,7 +1262,6 @@
     async function procesarPago() {
         const d = obtenerDatosEnvio();
 
-        // 1. Mapear los vinilos del carrito
         let itemsCheckout = carrito.map(item => ({
             title: String(item.titulo || "Vinilo Coleccionable"),
             quantity: parseInt(item.cantidad, 10) || 1,
@@ -1243,7 +1269,6 @@
             unit_price: convertirPrecioCOP(item.precio)
         })).filter(item => item.title && item.unit_price > 0);
 
-        // 2. LA CLAVE DE MAKE: El flete se separa enviando el objeto 'shipments' explícito
         const datosOrden = {
             items: itemsCheckout,
             payer: {
@@ -1266,7 +1291,6 @@
         };
 
         sessionStorage.setItem('dm_shipping', JSON.stringify(d));
-      // Copia de seguridad exacta del carrito por si el pago se cae
         sessionStorage.setItem('dm_cart_backup', JSON.stringify(carrito));
         const btnPay = document.getElementById('btn-pay-mp');
 
