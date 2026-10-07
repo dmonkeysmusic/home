@@ -175,7 +175,7 @@
       font-size: clamp(32px, 4vw, 44px);
       color: #fff;
       letter-spacing: 2px;
-      margin-bottom: 10px;
+      margin-bottom: 6px;
       border-bottom: 2px solid var(--accent);
       padding-bottom: 16px;
     }
@@ -202,15 +202,10 @@
       margin-bottom: 16px;
     }
 
-    .legal-card ul {
-      padding-left: 20px;
-    }
+    .legal-card ul { padding-left: 20px; }
+    .legal-card li { margin-bottom: 6px; }
 
-    .legal-card li {
-      margin-bottom: 6px;
-    }
-
-    /* ESTILOS DEL FOOTER CON SECCIÓN LEGAL */
+    /* FOOTER UNIFICADO CON SECCIÓN LEGAL */
     footer#contacto { border-top: 1px solid var(--border) !important; padding: 48px 24px 32px !important; text-align: center !important; background: #0a0a0a !important; margin-top: 60px !important; width: 100% !important; box-sizing: border-box !important; }
     .footer-content { max-width: 600px !important; margin: 0 auto !important; }
     .footer-logo { font-family: var(--font-display) !important; font-size: 30px !important; line-height: 1 !important; color: var(--accent) !important; letter-spacing: 2px !important; margin-bottom: 8px !important; text-transform: uppercase !important; }
@@ -250,25 +245,54 @@
 
   <main class="legal-container">
     <div class="legal-card">
-      <h1 class="legal-title">Política de Privacidad</h1>
+      <h1 class="legal-title">Política de Tratamiento de Datos Personales</h1>
       <div class="legal-update">Última actualización: 2026</div>
 
-      <h2>1. Información que recopilamos</h2>
-      <p>En Dirty Monkeys Music Store recopilamos información personal básica necesaria para procesar tus pedidos de vinilos y gestionar los envíos seguros a través de nuestros operadores logísticos en Bogotá y Colombia. Esto incluye nombre, correo electrónico, teléfono de contacto y dirección de entrega.</p>
+      <h2>1. Responsable del Tratamiento de Datos</h2>
+      <p>Dirty Monkeys Music Store, establecimiento de comercio registrado en Bogotá D.C., Colombia, es responsable del tratamiento de los datos personales recopilados a través de este sitio web, de conformidad con la Ley 1581 de 2012 y las demás normas aplicables en materia de protección de datos personales.</p>
+      <p>Para efectos de consultas, solicitudes o reclamos relacionados con el tratamiento de datos personales, los titulares podrán comunicarse a través de la sección Contacto disponible en este sitio web.</p>
 
-      <h2>2. Uso de la información</h2>
-      <p>Tus datos son utilizados exclusivamente para:</p>
+      <h2>2. Información que Recopilamos</h2>
+      <p>Para procesar correctamente tus pedidos de vinilos y productos relacionados, recopilamos la información que proporcionas directamente al realizar una compra, incluyendo:</p>
       <ul>
-        <li>Procesar, despachar y entregar tus compras de manera segura.</li>
-        <li>Enviar notificaciones automáticas sobre el estado de tu pedido y número de guía.</li>
-        <li>Brindar soporte técnico y atención al cliente ante cualquier duda o inconveniente.</li>
+        <li>Nombre y apellido completo.</li>
+        <li>Número de teléfono celular o WhatsApp.</li>
+        <li>Correo electrónico.</li>
+        <li>Dirección física de entrega, incluyendo departamento, municipio o ciudad, barrio, dirección y notas u observaciones necesarias para la entrega.</li>
       </ul>
 
-      <h2>3. Protección y seguridad de los datos</h2>
-      <p>Implementamos medidas de seguridad técnicas y administrativas para proteger tu información. Las transacciones financieras y de pago son procesadas de manera segura a través de pasarelas certificadas (como Mercado Pago), por lo que Dirty Monkeys no almacena información confidencial de tus tarjetas de crédito o débito.</p>
+      <h2>3. Finalidad del Tratamiento de Datos</h2>
+      <p>Los datos personales suministrados serán utilizados exclusivamente para las siguientes finalidades:</p>
+      <ul>
+        <li>Gestionar la creación, procesamiento y seguimiento las órdenes de compra.</li>
+        <li>Enviar confirmaciones de compra, información relacionada con el pedido y notificaciones sobre el estado del envío.</li>
+        <li>Coordinar la entrega de los pedidos a través de operadores logísticos y empresas transportadoras.</li>
+        <li>Gestionar los pagos mediante los proveedores de servicios de pago utilizados por la tienda.</li>
+        <li>Atender peticiones, consultas, reclamos y solicitudes relacionadas con las compras y los servicios ofrecidos por Dirty Monkeys Music.</li>
+      </ul>
+      <p>Cuando resulte necesario para cumplir estas finalidades, los datos podrán ser tratados por proveedores de servicios de pago, transporte, logística, tecnología u otros servicios necesarios para la operación de la tienda.</p>
 
-      <h2>4. Tus derechos</h2>
-      <p>Puedes solicitar en cualquier momento la actualización, rectificación o eliminación de tus datos personales escribiéndonos a través de nuestros canales oficiales de contacto o redes sociales.</p>
+      <h2>4. Seguridad y Pasarelas de Pago</h2>
+      <p>Dirty Monkeys Music adopta medidas técnicas y administrativas razonables para proteger los datos personales frente a pérdida, adulteración, acceso, uso o tratamiento no autorizado.</p>
+      <p>Las transacciones de pago son procesadas mediante los proveedores de servicios de pago disponibles en la tienda. Dirty Monkeys Music no almacena los datos completos de las tarjetas de crédito o débito cuando estos son gestionados directamente por dichos proveedores.</p>
+
+      <h2>5. Derechos de los Titulares</h2>
+      <p>De acuerdo con la legislación colombiana, los titulares de los datos personales tienen derecho a:</p>
+      <ul>
+        <li>Conocer, actualizar y rectificar sus datos personales.</li>
+        <li>Solicitar información sobre el tratamiento dado a sus datos.</li>
+        <li>Solicitar, cuando corresponda, la supresión de sus datos o la revocatoria de la autorización para su tratamiento.</li>
+        <li>Acceder gratuitamente a sus datos personales.</li>
+        <li>Presentar quejas ante la Superintendencia de Industria y Comercio cuando consideren que se han vulnerado las normas aplicables.</li>
+      </ul>
+      <p>Para ejercer estos derechos, los titulares podrán utilizar la sección Contacto de este sitio web, indicando que su solicitud está relacionada con el tratamiento de datos personales.</p>
+
+      <h2>6. Autorización para el Tratamiento</h2>
+      <p>Cuando sea requerida por la legislación aplicable, la autorización para el tratamiento de datos personales será solicitada previamente al titular, quien será informado sobre las finalidades para las cuales serán tratados sus datos.</p>
+
+      <h2>7. Vigencia y Actualizaciones</h2>
+      <p>Esta Política de Tratamiento de Datos Personales se encuentra vigente a partir de su publicación en el sitio web de Dirty Monkeys Music.</p>
+      <p>Dirty Monkeys Music podrá actualizar esta política cuando resulte necesario debido a cambios en la operación de la tienda, en las finalidades del tratamiento o en la normativa aplicable.</p>
     </div>
   </main>
 
