@@ -241,14 +241,19 @@
     }
     .btn-home:hover { border-color: var(--accent); color: var(--accent); }
 
+    /* FOOTER UNIFICADO */
     footer#contacto { border-top: 1px solid var(--border) !important; padding: 48px 24px 32px !important; text-align: center !important; background: #0a0a0a !important; margin-top: 60px !important; width: 100% !important; box-sizing: border-box !important; }
     .footer-content { max-width: 600px !important; margin: 0 auto !important; }
     .footer-logo { font-family: var(--font-display) !important; font-size: 30px !important; line-height: 1 !important; color: var(--accent) !important; letter-spacing: 2px !important; margin-bottom: 8px !important; text-transform: uppercase !important; }
     .footer-tagline { color: var(--text-muted) !important; font-size: 14px !important; margin-bottom: 22px !important; }
+    
     .footer-socials { display: flex !important; justify-content: center !important; gap: 12px !important; margin-bottom: 24px !important; flex-wrap: wrap !important; }
-    .footer-socials a { color: var(--text-main) !important; text-decoration: none !important; font-size: 13px !important; font-weight: 600 !important; border: 1px solid var(--border) !important; padding: 8px 14px !important; border-radius: 6px !important; display: inline-flex !important; align-items: center !important; gap: 8px !important; }
-    .footer-copy { font-size: 12px !important; color: #666666 !important; border-top: 1px solid #1a1a1a !important; padding-top: 20px !important; display: flex !important; align-items: center !important; justify-content: center !important; gap: 6px !important; }
-    .flag-colombia { width: 18px; height: 12px; display: inline-block; border-radius: 2px; }
+    .footer-socials a { color: var(--text-main) !important; text-decoration: none !important; font-family: var(--font-sans) !important; font-size: 13px !important; font-weight: 600 !important; border: 1px solid var(--border) !important; padding: 8px 14px !important; border-radius: 6px !important; display: inline-flex !important; align-items: center !important; gap: 8px !important; transition: border-color 0.2s, color 0.2s, background 0.2s !important; }
+    .footer-socials a svg { width: 16px !important; height: 16px !important; fill: currentColor !important; display: block !important; flex-shrink: 0 !important; }
+    .footer-socials a:hover { border-color: var(--accent) !important; color: var(--accent) !important; background: rgba(234, 165, 34, 0.05) !important; }
+
+    .footer-copy { font-size: 12px !important; color: #666666 !important; border-top: 1px solid #1a1a1a !important; padding-top: 20px !important; display: flex !important; align-items: center !important; justify-content: center !important; gap: 6px !important; flex-wrap: wrap !important; }
+    .flag-colombia { width: 18px; height: 12px; display: inline-block; border-radius: 2px; vertical-align: middle; }
   </style>
 </head>
 <body>
@@ -301,7 +306,7 @@
   </main>
 
 <!-- FOOTER UNIFICADO -->
-  <footer id="contacto">
+<footer id="contacto">
     <div class="footer-content">
       <div class="footer-logo">DIRTY MONKEYS MUSIC STORE</div>
       <p class="footer-tagline">Tienda de vinilos y coleccionables. Envíos a todo Colombia.</p>
@@ -325,7 +330,7 @@
         </a>
       </div>
 
-      <!-- NUESTRA LÍNEA DE ENLACES LEGALES INTEGRADA -->
+      <!-- ENLACES LEGALES INTEGRADOS -->
       <div style="margin: 14px 0 18px 0; font-size: 13px; color: var(--text-muted); display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
         <a href="politica_privacidad.html" style="color: var(--text-muted); text-decoration: none; transition: color 0.2s;">Política de Privacidad</a> &bull;
         <a href="politica_precios.html" style="color: var(--text-muted); text-decoration: none; transition: color 0.2s;">Política de Precios</a> &bull;
