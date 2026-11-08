@@ -369,15 +369,19 @@ footer#contacto {
     });
 
     // Lector blindado CSV
-    // Lector blindado CSV y espanta-fantasmas
     function parseCSV(text) {
-      // 1. Quitar el carácter invisible (BOM) que mete Google Sheets
+      // 1. Quitar el carácter invisible (BOM) que mete Google
       text = text.replace(/^\uFEFF/, '');
       
-      const lines = text.trim().split('\n');
+      // 2. Partir por "Enter", PERO ignorando los "Enters" que estén dentro de una descripción
+      const lines = text.split(/\r?\n(?=(?:(?:[^"]*"){2})*[^"]*$)/)
+                        .map(line => line.trim())
+                        .filter(line => line.length > 0);
+      
       if (lines.length <= 1) return [];
       
-      const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, '').toLowerCase());
+      const headers = lines[0].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/)
+                              .map(h => h.trim().replace(/^"|"$/g, '').toLowerCase());
       
       return lines.slice(1).map(line => {
         const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
@@ -385,7 +389,8 @@ footer#contacto {
         
         headers.forEach((h, i) => {
           let val = values[i] ? values[i].trim().replace(/^"|"$/g, '') : '';
-          // Limpiamos la moneda si es precio
+          
+          // Limpiamos los caracteres de moneda si es la columna precio
           if(h === 'precio') {
             val = val.replace(/[\$,]/g, '').trim(); 
           }
