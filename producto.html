@@ -369,17 +369,26 @@ footer#contacto {
     });
 
     // Lector blindado CSV
+    // Lector blindado CSV y espanta-fantasmas
     function parseCSV(text) {
+      // 1. Quitar el carácter invisible (BOM) que mete Google Sheets
+      text = text.replace(/^\uFEFF/, '');
+      
       const lines = text.trim().split('\n');
       if (lines.length <= 1) return [];
+      
       const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, '').toLowerCase());
       
       return lines.slice(1).map(line => {
         const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
         let item = {};
+        
         headers.forEach((h, i) => {
           let val = values[i] ? values[i].trim().replace(/^"|"$/g, '') : '';
-          if(h === 'precio') val = val.replace(/[\$,]/g, '').trim();
+          // Limpiamos la moneda si es precio
+          if(h === 'precio') {
+            val = val.replace(/[\$,]/g, '').trim(); 
+          }
           item[h] = val;
         });
         return item;
